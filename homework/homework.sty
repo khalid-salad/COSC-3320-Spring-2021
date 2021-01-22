@@ -1,0 +1,146 @@
+\ProvidesPackage{homework}
+\RequirePackage[l2tabu, orthodox]{nag}
+%\renewcommand{\baselinestretch}{1.3}
+\usepackage[a4paper,margin=1in]{geometry}
+\setlength{\marginparwidth}{2cm} 
+\usepackage{amssymb,amsmath,amsthm,amsfonts,mathrsfs,xcolor}
+\usepackage{mathtools}
+\usepackage[notref, notcite]{showkeys}
+\usepackage[colorlinks=true]{hyperref}
+\hypersetup{final}
+\usepackage{url}
+\usepackage{ifdraft, tocloft}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+\usepackage{xparse, xspace}
+\usepackage{setspace}
+\usepackage{ifthen}
+\usepackage[titletoc]{appendix}
+\usepackage{graphicx}
+\usepackage{lineno}
+\usepackage[inline]{enumitem}
+\usepackage{cancel}
+\usepackage{tikz, pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{calc}
+\usepackage{caption, subcaption}
+\usepackage{tabularx}
+\usepackage[normalem]{ulem}
+\usepackage{microtype}
+\usepackage{booktabs, multicol, multirow, adjustbox, blkarray}
+\usepackage{xfrac}
+\UseCollection{xfrac}{plainmath}
+\usepackage{chessfss}
+\usepackage{thmtools}
+\usepackage{mleftright}
+\mleftright
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{keyval}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{layout}
+\ifdraft{\usepackage{draftwatermark}\SetWatermarkAngle{90}\SetWatermarkFontSize{2cm}\SetWatermarkHorCenter{1cm}}{}
+\newcommand{\soutthick}[1]{%
+    \renewcommand{\ULthickness}{1.2pt}%
+       \sout{#1}%
+    \renewcommand{\ULthickness}{.4pt}% Resetting to ulem default
+}
+\usetikzlibrary{shapes, shapes.misc}
+\usetikzlibrary{decorations}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{positioning}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shadows}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows, arrows.meta}
+\usetikzlibrary{trees}
+\tikzset{>={Latex[width=2mm,length=2mm]}}
+
+
+\newcommand{\exercisenumber}{}
+\newtcbtheorem{exercisebase}{Exercise~\exercisenumber}{breakable, colframe=red!35!black,fonttitle=\bfseries, separator sign={~\(\blacktriangleright\)}}{exe}
+\newenvironment{exercise}[1]{\renewcommand{\exercisenumber}{#1}\begin{exercisebase*}{}{}}{\end{exercisebase*}}
+\newcounter{qstn}[subsection]
+\newtcbtheorem{questionbase}{\stepcounter{qstn}Question~\arabic{qstn}}{breakable, colframe=red!35!black,fonttitle=\bfseries, separator sign={~\(\blacktriangleright\)}}{que}
+\newenvironment{question}{\begin{questionbase*}{}{}}{\end{questionbase*}}
+
+
+\newenvironment{solution}{\begin{proof}[\textnormal{\textbf{Solution}}]}{\end{proof}}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\cyclicgroup}[1]{\left\langle#1\right\rangle}
+\newcommand{\card}[1]{\left\lvert#1\right\rvert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
+\newcommand{\bigOm}[1]{\Omega\left(#1\right)}
+\newcommand{\bigTh}[1]{\Theta\left(#1\right)}
+\newcommand{\littleO}[1]{o\left(#1\right)}
+\newcommand{\littleOm}[1]{\omega\left(#1\right)}
+\newcommand{\littleTh}[1]{\theta\left(#1\right)}
+\renewcommand{\Pr}{\mathbb{P}}
+\newcommand{\prob}[1]{\operatorname{\Pr}\left(#1\right)}
+\newcommand{\expectation}[1]{\operatorname{\mathbb{E}}\left[#1\right]}
+\newcommand{\variance}[1]{\operatorname{\mathbb{V}}\left[#1\right]}
+\newcommand{\suchthat}{\mid}
+\newcommand{\given}{\mid}
+\newcommand{\divides}{\mid}
+\newcommand{\concat}{+}
+\newcommand{\sign}[1]{\operatorname{sign}\left(#1\right)}
+\newcommand{\set}[1]{\left\lbrace#1\right\rbrace}
+\renewcommand{\vec}[1]{\boldsymbol{#1}}
+\newcommand{\nth}[1]{#1^{\text{th}}}
+\DeclareMathOperator{\midindex}{midindex}
+
+
+
+\makeatletter
+\NewDocumentCommand{\LineComment}{s m}{%
+    \Statex \IfBooleanF{#1}{\hspace*{\ALG@thistlm}}\(\triangleright\) #2}
+\makeatother
+
+\definecolor{algcolor}{HTML}{2979FF}
+\definecolor{inputcolor}{rgb}{1, 0, 0}
+\definecolor{outputcolor}{rgb}{1, 0, 0}
+\definecolor{keywordcolor}{HTML}{80CBC4}
+%%--------------------PYTHON STYLE---------------------------------%
+\algrenewtext{For}[1]{\algorithmicfor~#1:}
+\algrenewtext{If}[1]{\algorithmicif~#1:}
+\algrenewtext{While}[1]{\algorithmicwhile~#1:}
+\algrenewtext{ElsIf}[1]{\algorithmicelse~\algorithmicif~#1:}
+\algrenewtext{Else}{\algorithmicelse:}
+\algrenewtext{Function}[2]{\textbf{def}~\textproc{\AlgName{#1}}(#2):}
+\algrenewtext{Procedure}[2]{\textbf{def}~\textproc{\AlgName{#1}}(#2):}
+%%-----------------------------------------------------------------%
+% \algrenewtext{Function}[2]{\algorithmicfunction~\textproc{\AlgName{#1}}(#2)}
+% \algrenewtext{Procedure}[2]{\algorithmicprocedure~\textproc{\AlgName{#1}}(#2)}
+\algnewcommand\algorithmicto{\textbf{to}}
+
+\algblockdefx{ForEach}{EndForEach}[1]{\algorithmicfor~\textbf{each}~#1:}{\algorithmicend~\algorithmicfor~\textbf{each}}
+\makeatletter
+\ifthenelse{\equal{\ALG@noend}{t}}{\algtext*{EndForEach}}{}
+\makeatother
+
+\algblockdefx{ForRange}{EndForRange}[3]{\algorithmicfor~#1~$\gets$~#2~\algorithmicto~#3:}{\algorithmicend~\algorithmicfor}
+\makeatletter
+\ifthenelse{\equal{\ALG@noend}{t}}{\algtext*{EndForRange}}{}
+\makeatother
+
+
+\newcommand{\False}{\texttt{False}\xspace}
+\newcommand{\True}{\texttt{True}\xspace}
+\newcommand{\Null}{\texttt{Null}\xspace}
+\newcommand{\AlgName}[1]{{\textcolor{algcolor}{#1}}}
+\newcommand{\AlgInput}[1]{\Statex \textcolor{inputcolor}{\hspace*{\algorithmicindent}Input\phantom{O} \(\triangleright\)} #1}
+\newcommand{\AlgOutput}[1]{\Statex \textcolor{outputcolor}{\hspace*{\algorithmicindent}Output \(\triangleright\)} #1}
+\renewcommand*\Call[2]{\textproc{#1}\left(#2\right)}
+\NewDocumentCommand{\CallRef}{s m m}{
+    \IfBooleanTF{#1}{\Call{\nameref*{#2}}{#3}}{\Call{\nameref{#2}}{#3}}
+}
+
+\newcommand{\comp}[1]{\overline{#1}}
+\makeatletter
+\renewcommand{\fnum@algorithm}{\fname@algorithm}
+\makeatother

@@ -1,0 +1,148 @@
+\documentclass[final]{article}
+\usepackage{homework}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Homework 0 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large NAME\par}
+        \vspace{0.5cm}
+        {\large \par} Due: Sunday, February 07, 2021\\11:59 PM
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    Your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your submission must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    \begin{tcolorbox}[title=Reading,fonttitle=\bfseries]
+        Chapters 2, 3, and Appendix A. In particular, several worked exercises with solutions are provided at the end of each chapter. Attempting to solve the worked exercises \textbf{before} seeing their solutions is a good learning technique.
+    \end{tcolorbox}
+    The exercises below are from \href{https://sites.google.com/site/gopalpandurangan/home/algorithms-course}{the book}. The book is updated periodically, so be sure to use the latest version.
+
+    \begin{tcolorbox}[title=Exercises,fonttitle=\bfseries]
+        2.3, 2.9, 2.12, A.3 (appendix A)
+    \end{tcolorbox}
+
+    \textbf{Justify your answers. Show appropriate work.}
+\end{titlepage}
+\vspace*{\fill}\begin{center}{\Huge This page intentionally left blank.}\end{center}\vspace*{\fill}\thispagestyle{empty}\clearpage
+\pagenumbering{arabic}
+
+\section{Class Questions}
+\subsection{January 19}
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\subsection{January 21}
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\begin{question}
+    TYPE SOLUTION HERE.
+\end{question}
+
+\section{Textbook Exercises}
+\begin{exercise}{2.3}
+    The algorithm \AlgName{\nameref*{alg:binsqrt}} is iterative. Modify it to make it a recursive algorithm.
+
+    \begin{algorithm}[H]
+        \caption[\AlgName{BinaryISqrt}]{\nameref*{alg:binsqrt} -- Binary Search Square Root}
+        \label{alg:binsqrt}
+        \begin{algorithmic}[1]
+            \Function{\nameref*{alg:binsqrt}}{$n$}
+            \AlgInput{A natural number $n$}
+            \AlgOutput{$\floor{\sqrt{n}}$}
+            \State $\texttt{low} \gets 1$   \Comment{Low value of guess}
+            \State $\texttt{high} \gets n$  \Comment{High value of guess}
+            \While{\True}
+            \State $\texttt{mid} \gets \floor{\sfrac{(\texttt{low} + \texttt{high})}{2}}$   \Comment{current estimate}
+            \If {$\texttt{mid} ^2 \leq n$ and $(\texttt{mid}+1)^2 > n$}
+            \State \Return $\texttt{mid}$
+            \ElsIf {$\texttt{mid}^2 < n$} \Comment{$\texttt{mid} < \floor{\sqrt{n}}$}
+            \State $\texttt{low} \gets \texttt{mid}$
+            \Else \Comment{$\texttt{mid} > \floor{\sqrt{n}}$}
+            \State $\texttt{high} \gets \texttt{mid}$
+            \EndIf
+            \EndWhile
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{2.9}
+    There are $n$ adults in town A and they all need to go to town B. There is only a motorbike available which is owned by two boys.
+    The motorbike can carry only one adult or up to two boys at a time (note that at one least person is needed to ride a bike). Using the motorbike, all the adults need to reach town B from town A.
+    Show how this can be accomplished while, at the end, leaving the motorbike with the two boys in town A.
+
+    Show the correctness of your algorithm by using mathematical induction and analyze the number of trips needed. (Hint: Use decrease and conquer to reduce the problem size.)
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{2.12}
+    Rank the following functions by order of growth; that is, find an
+    arrangement $g_1, g_2, g_3, \dots$ of the functions satisfying
+    $g_1=\bigO{g_2}$, $g_2=\bigO{g_3}, \dots$.
+    \[n^{1.5} + n, \frac{3n}{\log^3 n}, n \log^2 n, 1.01^n,   \log^{5} n,
+        \frac{1}{n^2},  4^{\lg n}, n!,  (\lg n)^{\lg n}\]
+    Note: $\lg$ or $\log$ means logarithm to the base 2 and $\log^{5} n$ is the usual way of writing
+    $(\log n)^{5}$.
+
+    Justify your ordering with arguments.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+\begin{exercise}{A.3}
+    Prove the following statement by mathematical induction:
+    \[\sum_{i=0}^n a^i = \frac{a^{n+1} - 1}{a-1}\] where $a \neq 1$
+    is some fixed real number.
+
+    By the way, this is the sum of a geometric series, a useful
+    formula that one comes across often in algorithmic analysis.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+
+\end{document}
+
