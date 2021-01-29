@@ -1,0 +1,102 @@
+\documentclass[final]{article}
+\usepackage{programming}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Programming Assignment 1 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large NAME\par}
+        \vspace{0.5cm}
+        {\large \par} Due: Sunday, February 21, 2021\\11:59 PM
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    The writeup portion of your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your writeup must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    Before you begin the assignment, create an account on \href{https://leetcode.com/}{LeetCode} if you do not already have one.
+
+    \begin{problem}{\href{https://leetcode.com/problems/permutations/}{Permutations}}{}
+    Given an array \texttt{nums} of distinct integers, return \emph{all the possible permutations}. You must return the permutations such that any permutation can be obtained from the previous permutation by \emph{swapping a single pair of elements}.
+    \end{problem}
+
+    \begin{example}{}{}
+        Input: $\texttt{nums} = [1,2,3]$
+
+        Output: \noindent $[1, 2, 3], [2, 1, 3], [2, 3, 1], [1, 3, 2], [3, 1, 2], [3, 2, 1]$
+
+    \end{example}
+
+    \begin{example}{}{}
+        Input: $\texttt{nums} = nums = [0,1]$
+
+        Output: \noindent $[0, 1], [1, 0]$
+    \end{example}
+
+    \begin{example}{}{}
+        Input: $\texttt{nums} = [1]$
+
+        Output: \noindent Output: $[1]$
+    \end{example}
+
+    It is important that you solve this problem using \emph{recursion}. That is, you have to reduce the original problem into one or more subproblem, recursively solve the subproblems, and then combine the solutions to obtain the solution to the original problem. Your solution should take $\bigO{n!}$ time. A solution that does not use recursion \textbf{will receive a zero}.
+    %You should \emph{not use sorting} to solve this problem.
+    %Instead, you should specify the recursive approach, specify subproblem(s), and use a recurrence to bound the running time.
+
+    Note that the LeetCode webpage allows the permutations to be output in any order. By contrast, \textbf{we require the permutations to be output such that any two consecutive permutations differ by swapping a single pair of elements}. Additionally, some solutions on LeetCode do not use recursion. These are not acceptable solutions. Some solutions posted may also be wrong. In any case,
+    a solution that is largely copied from another source (e.g., verbatim or made to look different by simply changing variable names) will be \textbf{a violation of the Academic Honesty Policy}.
+
+    The following must be submitted.
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+        \item Source Code (50 Points)
+              \begin{itemize}
+                  \item Write your solution in Python, C, C++, Java, or JavaScript.
+                  \item Your code should be well written and well commented.
+                  \item We must be able to \emph{directly copy and paste your code into LeetCode}. If your code does not compile \textbf{on LeetCode}, it will \textbf{will receive zero points}. Under no circumstances will we attempt to modify any submission, so be sure the code you submit works.
+              \end{itemize}
+        \item Writeup (50 Points)
+              \begin{itemize}
+                  \item Pseudocode for your solution, with an explanation in words why your solution works. (30 points)
+                  \item Analysis, showing the correctness of your algorithm and its complexity (i.e., its runtime). (20 points).
+                  \item A link to your LeetCode profile (e.g., \texttt{https://leetcode.com/jane-doe/}) with a statement of whether or not your code was accepted by LeetCode. We will verify whether your code is accepted.
+              \end{itemize}
+    \end{enumerate}
+\end{titlepage}
+
+\section{Pseudocode}
+\begin{algorithm}[H]
+    \caption[\AlgName{Permutations}]{\nameref*{alg:permutations} -- Permutations of an Array }
+    \label{alg:permutations}
+    \begin{algorithmic}[1]
+        \Function{\nameref*{alg:permutations}}{$A$}
+        \AlgInput{An array $A$ of distinct elements.}
+        \AlgOutput{All $n!$ permutations of $A$ such that consecutive permutations differ by a single swap.}
+        \State $n\gets\card{A}$
+        \If {$n = 1$}\Comment{Base Case}
+        \State{Base Case Stuff}
+        \Else \Comment{Recursive Step}
+        \State{Recursive Step Stuff}
+        \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+\section{Analysis}
+
+\section{LeetCode}
+My LeetCode account can be found at \url{https://leetcode.com/problems/permutations/}. My submission was accepted with 25 / 25 test cases passed.
+\end{document}
