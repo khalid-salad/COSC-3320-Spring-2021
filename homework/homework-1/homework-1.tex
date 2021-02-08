@@ -1,0 +1,182 @@
+\documentclass[draft]{article}
+\usepackage{homework}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Homework 1 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large NAME\par}
+        \vspace{0.5cm}
+        {\large \par} Due: Sunday, February 21, 2021\\11:59 PM
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    Your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your submission must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    \begin{tcolorbox}[title=Reading,fonttitle=\bfseries]
+        Chapters 4 and 5. In particular, several worked exercises with solutions are provided at the end of each chapter. Attempting to solve the worked exercises \textbf{before} seeing their solutions is a good learning technique.
+    \end{tcolorbox}
+    The exercises below are from \href{https://sites.google.com/site/gopalpandurangan/home/algorithms-course}{the book}. The book is updated periodically, so be sure to use the latest version.
+
+    \begin{tcolorbox}[title=Exercises,fonttitle=\bfseries]
+        4.1(a), 4.3(6), 4.4, 4.8, 5.1, 5.9
+    \end{tcolorbox}
+
+    \textbf{Justify your answers. Show appropriate work.}
+\end{titlepage}
+\vspace*{\fill}\begin{center}{\Huge This page intentionally left blank.}\end{center}\vspace*{\fill}\thispagestyle{empty}\clearpage
+\pagenumbering{arabic}
+
+\section{Class Questions}
+\subsection{January 26}
+
+\begin{question}
+    Show that any degree $d$ polynomial $p(n) = a_0n^d + a_1n^{d - 1} + \dots + a_{n-1}n + a_n$, with $a_0 > 0$, is $\bigO{n^d}$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{question}
+    Show that, for any $a > 1$, $n^b = \bigO{a^n}$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{question}
+    Show that $a^{\log_b{n}} = n^{\log_b{a}}$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\subsection{January 28}
+\begin{question}
+    Prove by mathematical induction that the gcd algorithm given in class is correct. You may assume $\gcd(a,b)=\gcd(b, a \bmod b)$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\subsection{February 4}
+\begin{question}
+    Solve $T(n) = 3T(\sfrac{n}{2}) + n^2$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{question}
+    Show the correctness of \texttt{MergeSort} using Induction. You may assume the \texttt{Merge} subroutine is correct.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{question}
+    Argue that QuickSort cannot take more than $\binom{n}{2} = \sfrac{n(n - 1)}{2}$ comparisons.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\section{Textbook Exercises}
+\begin{exercise}{4.1}
+    Prove the asymptotic bound for the following recurrences by using
+    induction. Assume that base cases of all the recurrences are
+    constants i.e., $ T(n) = \bigTh{1}$, for $n < c$ where $c$ is some
+    constant.
+    \begin{enumerate}[label=(\alph*)]
+        \item $T(n) \leq 2 T(n/2) + n^2$. Then, $T(n) = \bigO{n^2 \log n}$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{4.3(6)}
+    Solve the following recurrences. Give the answer in terms of \emph{Big-Theta} notation.  Solve up to constant
+    factors, i.e., your answer must give the correct function for $T(n)$, up to constant factors.
+    You can  assume constant base cases, i.e., $T(1) = T(0) = c$, where $c$ is a positive constant.
+    You can ignore floors and ceilings. You can use the DC Recurrence Theorem if it applies.
+    \begin{enumerate}[start=6, label=\arabic*.]
+        \item $T(n) = 4 T(n/2) + n^3$
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{4.4}
+    You are given an array consisting of $n$ numbers. A popular element is an element
+    that occurs (strictly) \textbf{more than} $n/2$ times in the array. Give an algorithm that finds
+    the popular element in the array if it exists, otherwise it should output ``NO''. Your algorithm should take no more than $2n$ comparisons. (As usual, we only count the comparisons between array elements.)
+    Give pseudocode, argue its correctness, and show that your algorithm indeed takes no more than $2n$ comparisons.
+    (Hint: Use a decrease and conquer strategy, similar to the celebrity problem.)
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+\begin{exercise}{4.8}
+    Give a recursive algorithm to compute $b^n$ for a given integer $n$.
+    Your algorithm should perform only $\bigO{\log{n}}$ integer multiplications.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+\begin{exercise}{5.1}
+    Determine the total number of comparisons that each of the following algorithms takes on $S = [8, 2, 6, 7, 5, 1, 4, 3]$.
+    \begin{itemize}[nosep]
+        \item \AlgName{SimpleSort}
+        \item \AlgName{MergeSort}
+        \item \AlgName{QuickSort}
+    \end{itemize}
+    Show the steps of the algorithm when calculating the number of comparisons.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+\begin{exercise}{5.9}
+    Given three SORTED (in ascending order) arrays $A[1..n], B[1..n]$,
+    and $C[1..n]$, each containing $n$ numbers, give an $\bigO{\log n}$-time algorithm (again, counting the number of comparisons) to find the $\nth{n}$ smallest number of all $3n$
+    elements in arrays $A, B$, and $C$.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE
+\end{solution}
+
+\end{document}
+
