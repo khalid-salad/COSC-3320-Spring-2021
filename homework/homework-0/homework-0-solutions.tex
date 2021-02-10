@@ -1,0 +1,290 @@
+\documentclass[draft]{article}
+\usepackage{homework}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Homework 0 Solutions \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    Your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your submission must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    \begin{tcolorbox}[title=Reading,fonttitle=\bfseries]
+        Chapters 2, 3, and Appendix A. In particular, several worked exercises with solutions are provided at the end of each chapter. Attempting to solve the worked exercises \textbf{before} seeing their solutions is a good learning technique.
+    \end{tcolorbox}
+    The exercises below are from \href{https://sites.google.com/site/gopalpandurangan/home/algorithms-course}{the book}. The book is updated periodically, so be sure to use the latest version.
+
+    \begin{tcolorbox}[title=Exercises,fonttitle=\bfseries]
+        2.3, 2.9, 2.12, A.3 (appendix A)
+    \end{tcolorbox}
+
+    \textbf{Justify your answers. Show appropriate work.}
+\end{titlepage}
+\vspace*{\fill}\begin{center}{\Huge This page intentionally left blank.}\end{center}\vspace*{\fill}\thispagestyle{empty}\clearpage
+\pagenumbering{arabic}
+
+\section{Class Questions}
+\subsection{January 19}
+
+\begin{question}
+    Show that, in the Celebrity Problem, there can be at most \textbf{one} celebrity.
+\end{question}
+
+\begin{solution}
+    Suppose there exist two or more celebrities and say $A$ and $B$ are different celebrities. Since $A$ is a celebrity, $B$ must know $A$. Then $B$ is not a celebrity. This is a contradiction.
+\end{solution}
+
+\begin{question}
+    Give a simple lowerbound for the number of quesitons asked for the Celebrity Problem.
+\end{question}
+
+\begin{solution}
+    Clearly, we must ask each person at least one question for a trivial lowerbound of $n$ questions.
+\end{solution}
+
+\begin{question}
+    Improve the algorithm given in class for the Celebrity Problem so that it requires $3n - 4$ questions.
+\end{question}
+
+\begin{solution}
+    When the remaining candidate, $X$, is left, we must determine if the other $n - 1$ people know $X$. However, the last person to be removed has \emph{already been confirmed} to know $X$, so this person needs not be asked. Thus, we can reduce the number of questions asked by 1 to $3n - 4$ in total.
+\end{solution}
+
+\begin{question}
+    Prove that, in the $2^n \times 2^n$ Tiling Problem, no solution exists using L-shaped 3-tiles if there is not a ``hole'' in the board.
+\end{question}
+
+\begin{solution}
+    Notice that, if $k$ tiles can fill the grid, then we must have $2^n \times 2^n = 3k$. Then $3$ divides $2^{2n}$, which is clearly impossible.
+\end{solution}
+
+\subsection{January 21}
+\begin{question}
+    Using mathematical induction, show the correctness of the Decrease-and-Conquer algorithm for the Celebrity Problem given in class.
+\end{question}
+
+\begin{solution}
+    The base case is trivial. Suppose we have that our algorithm works on $n - 1$ people. Then on $n$ people, we eliminate a single person by the method described in the algorithm, so that $n - 1$ remain. By our induction hypothesis, this algorithm correctly identifies the celebrity candidate amongst those $n - 1$ people. Then the final step of checking whether the $n - 1$ eliminated candidates know our celebrity candidate correctly establishes whether they are a celebrity.
+\end{solution}
+
+\begin{question}
+    Explain why an $\bigO{\sqrt{n}}$ algorithm for determining if an integer $n$ is prime is inefficient.
+\end{question}
+
+\begin{solution}
+    Algorithms with numerical inputs have \emph{the number of digits used to represent them} as their \emph{input size}\footnote{Strictly speaking, this can be any base greater than 1, though we typically use base-2 and note that all logarithm bases greater than 1 are asymptotically equal up to a constant factor.}. Then $b = \ceil{\log{n}}$ is our input size, and this algorithm has runtime $\bigO{\sqrt{n}} = \bigO{\sqrt{2^b}} = \bigO{2^{\frac{b}{2}}}$, which is \emph{exponential} in the input size.
+\end{solution}
+
+\section{Textbook Exercises}
+\begin{exercise}{2.3}
+    The algorithm \AlgName{\nameref*{alg:binsqrt}} is iterative. Modify it to make it a recursive algorithm.
+
+    \begin{algorithm}[H]
+        \caption[\AlgName{BinaryISqrt}]{\nameref*{alg:binsqrt} -- Binary Search Square Root}
+        \label{alg:binsqrt}
+        \begin{algorithmic}[1]
+            \Function{\nameref*{alg:binsqrt}}{$n$}
+            \AlgInput{A natural number $n$}
+            \AlgOutput{$\floor{\sqrt{n}}$}
+            \State $\texttt{low} \gets 1$   \Comment{Low value of guess}
+            \State $\texttt{high} \gets n$  \Comment{High value of guess}
+            \While{\True}
+            \State $\texttt{mid} \gets \floor{\sfrac{(\texttt{low} + \texttt{high})}{2}}$   \Comment{current estimate}
+            \If {$\texttt{mid} ^2 \leq n$ and $(\texttt{mid}+1)^2 > n$}
+            \State \Return $\texttt{mid}$
+            \ElsIf {$\texttt{mid}^2 < n$} \Comment{$\texttt{mid} < \floor{\sqrt{n}}$}
+            \State $\texttt{low} \gets \texttt{mid}$
+            \Else \Comment{$\texttt{mid} > \floor{\sqrt{n}}$}
+            \State $\texttt{high} \gets \texttt{mid}$
+            \EndIf
+            \EndWhile
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+\end{exercise}
+
+\begin{solution}\mbox{}
+    \begin{algorithm}[H]
+        \caption[\AlgName{RecBinaryISqrt}]{\nameref*{alg:recbinsqrt} -- Recursive Binary Search Square Root}
+        \label{alg:recbinsqrt}
+        \begin{algorithmic}[1]
+            \Function{\nameref*{alg:recbinsqrt}}{$n$}
+            \AlgInput{A natural number $n$}
+            \AlgOutput{$\floor{\sqrt{n}}$}
+            \Function{\AlgName{Helper}}{\texttt{low}, \texttt{high}} \Comment{Helper function}
+            \State $\texttt{mid} \gets \floor{\sfrac{(\texttt{low} + \texttt{high})}{2}}$   \Comment{current estimate}
+            \If {$\texttt{mid} ^2 \leq n$ and $(\texttt{mid}+1)^2 > n$}
+            \State \Return $\texttt{mid}$
+            \ElsIf {$\texttt{mid}^2 < n$} \Comment{$\texttt{mid} < \floor{\sqrt{n}}$}
+            \State \Return $\Call{\AlgName{Helper}}{\texttt{mid},\texttt{high}}$
+            \Else \Comment{$\texttt{mid} > \floor{\sqrt{n}}$}
+            \State \Return $\Call{\AlgName{Helper}}{\texttt{low}, \texttt{mid}}$
+            \EndIf
+            \EndFunction
+            \State \Return $\Call{\AlgName{Helper}}{n, 1, n}$
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+\end{solution}
+
+\begin{exercise}{2.9}
+    There are $n$ adults in town A and they all need to go to town B. There is only a motorbike available which is owned by two boys.
+    The motorbike can carry only one adult or up to two boys at a time (note that at one least person is needed to ride a bike). Using the motorbike, all the adults need to reach town B from town A.
+    Show how this can be accomplished while, at the end, leaving the motorbike with the two boys in town A.
+
+    Show the correctness of your algorithm by using mathematical induction and analyze the number of trips needed. (Hint: Use decrease and conquer to reduce the problem size.)
+\end{exercise}
+
+\begin{solution}
+    To begin, have both boys drive the motorbike to town $B$. Then, have \emph{one} boy drive the bike back to town $A$. From here, an adult in town $A$ can drive the bike to town $B$, and the boy who remained in town $B$ can drive the bike back to $A$. Repeat $n$ times.
+
+    We will show by induction that the above algorithm transports \emph{all} adults to town $B$ and leaves the two boys in town $A$. The base case is clear. Suppose that this holds for $n - 1$ adults. Then, for $n$ adults, the above algorithm transports one adult and leaves both boys in town $A$. Then, with $n - 1$ adults left, the process is repeated $n - 1$ times, the correctness of which follows from the induction hypothesis.
+
+    Similarly, we note that the number of trips, $T(n)$, is given by $T(n) = T(n - 1) + 4$ with $T(1) = 4$. The base case is given, and again a simple induction argument shows that $T(n) = 4n$:
+    \begin{align*}T(n)
+         & = T(n - 1) + 4                                     \\
+         & = 4(n - 1) + 4 \hbox{ by the induction hypothesis} \\
+         & = 4n - 4 + 4                                       \\
+         & = 4n\qedhere
+    \end{align*}
+\end{solution}
+
+\begin{exercise}{2.12}
+    Rank the following functions by order of growth; that is, find an
+    arrangement $g_1, g_2, g_3, \dots$ of the functions satisfying
+    $g_1=\bigO{g_2}$, $g_2=\bigO{g_3}, \dots$.
+    \[n^{1.5} + n, \frac{3n}{\log^3 n}, n \log^2 n, 1.01^n,   \log^{5} n,
+        \frac{1}{n^2},  4^{\lg n}, n!,  (\lg n)^{\lg n}\]
+    Note: $\lg$ or $\log$ means logarithm to the base 2 and $\log^{5} n$ is the usual way of writing
+    $(\log n)^{5}$.
+
+    Justify your ordering with arguments.
+\end{exercise}
+
+\begin{solution}
+    The correct ordering is \[\frac{1}{n^2}, \log^5{n}, \frac{3n}{\log^3{n}}, n\log^2{n}, n^{1.5} + n, 4^{\log{n}}, \log{n}^{\log{n}}, {1.01}^n, n!\]
+    We will show this one-by-one.
+    \begin{itemize}
+        \item $\displaystyle\frac{1}{n^2} = \bigO{\log^5{n}}$
+
+              This follows directly from the limit definition \[\lim_{n\to\infty}\frac{\frac{1}{n^2}}{\log^5{n}} = \lim_{n\to\infty}\frac{1}{n^2\log^5{n}} = 0\]
+
+        \item $\displaystyle\log^5{n} = \bigO{\frac{3n}{\log^3{n}}}$
+
+              This follows directly from the limit definition, applying L'H\^{o}pital's Rule
+              \begin{align*}\lim_{n\to\infty}\frac{\log^5{n}}{\frac{3n}{\log^3{n}}}
+                   & = \lim_{n\to\infty}\frac{\log^8{n}}{3n}                               \\
+                   & = \frac{1}{\ln^8{2}}\lim_{n\to\infty}\frac{\ln^8{n}}{3n}              \\
+                   & = \frac{1}{\ln^8{2}}\lim_{n\to\infty}\frac{8\ln^7{n}}{3n}             \\
+                   & = \frac{1}{\ln^8{2}}\lim_{n\to\infty}\frac{8\cdot7\ln^6{n}}{3n}       \\
+                   & = \frac{1}{\ln^8{2}}\lim_{n\to\infty}\frac{8\cdot7\cdot6\ln^5{n}}{3n} \\
+                   & \phantom{..}\vdots                                                    \\
+                   & = \frac{1}{\ln^8{2}}\lim_{n\to\infty}\frac{8!}{3n}                    \\
+                   & = 0
+              \end{align*}
+
+        \item $\displaystyle \frac{3n}{\log^3{n}} = \bigO{n\log^2{n}}$
+
+              This follows directly from the limit definition \[\lim_{n\to\infty}\frac{\frac{3n}{\log^3{n}}}{n\log^2{n}} = \lim_{n\to\infty}\frac{3}{\log^5{n}} = 0\]
+
+        \item $\displaystyle n\log^2{n} =\bigO{n^{1.5} + n}$
+
+              This follows directly from the limit definition, applying L'H\^{o}pital's Rule
+              \begin{align*}\lim_{n\to\infty}\frac{n\log^2{n}}{n^{1.5} + n}
+                   & = \frac{1}{\ln^2{2}}\lim_{n\to\infty}\frac{n\ln^2{n}}{n^{1.5} + n}              \\
+                   & = \frac{1}{\ln^2{2}}\lim_{n\to\infty}\frac{\ln^2{n} + 2\ln{n}}{1.5n^{0.5} + 1}  \\
+                   & = \frac{1}{\ln^2{2}}\lim_{n\to\infty}\frac{\frac{2\ln{n} + 2}{n}}{0.75n^{-0.5}} \\
+                   & = \frac{1}{\ln^2{2}}\lim_{n\to\infty}\frac{\frac{2\ln{n} + 2}{n}}{0.75n^{-0.5}} \\
+                   & = \frac{8}{3\ln^2{2}}\lim_{n\to\infty}\frac{\ln n + 1}{n^{0.5}}                 \\
+                   & = \frac{8}{3\ln^2{2}}\lim_{n\to\infty}\frac{2}{n^{0.5}}                         \\
+                   & = 0
+              \end{align*}
+
+        \item $\displaystyle n^{1.5} + n = \bigO{4^{\log{n}}}$
+
+              Note that $4^{\log{n}} = n^2$. Then, this follows directly from the limit definition:
+
+              \begin{align*}\lim_{n\to\infty}\frac{n^{1.5} + n}{n^2}
+                   & = \lim_{n\to\infty} \frac{1.5n^{0.5} + 1}{2n}  \\
+                   & = \lim_{n\to\infty} \frac{0.75n^{-0.5} + 1}{2} \\
+                   & = 0
+              \end{align*}
+
+        \item $\displaystyle 4^{\log{n}} = \bigO{\log{n}^{\log{n}}}$
+
+              Note that $4^{\log{n}} = n^2$ and $\log{n}^{\log{n}} = n^{\log{\log{n}}}$. Clearly, then, when $\log\log{n} \geq 2$, $\log{n}^{\log{n}} \geq 4^{\log{n}}$, which holds for $n \geq 2^{2^2} = 2^4 = 16$. Alternatively, this follows from the limit definition.
+
+        \item $\displaystyle \log{n}^{\log{n}} = \bigO{{1.01}^n}$
+
+              We will compare the logarithms of these functions:
+              \begin{align*}\lim_{n\to\infty}\frac{\log{n}\log\log{n}}{n\log{1.01}}
+                   & = \frac{1}{\log{1.01}\ln^2{2}}\lim_{n\to\infty}\frac{\ln{n}\ln\ln{n} - \ln{n}\ln\ln{2}}{n} \\
+                   & = \frac{1}{\log{1.01}\ln^2{2}}\lim_{n\to\infty}\frac{\ln\ln{n} + 1 - \ln\ln{2}}{n}         \\
+                   & = \frac{1}{\log{1.01}\ln^2{2}}\lim_{n\to\infty}\frac{1}{n\ln{n}}                           \\
+                   & = 0
+              \end{align*}
+
+        \item $\displaystyle {1.01}^n = \bigO{n!}$
+
+              This can be proven by induction. The base case is $n = 2$, which is straightforward: $1.01^2 = 1.0201 < 2 = 2!$. Suppose that ${1.01}^{n - 1} < (n - 1)!$ for some $n > 3$, then
+              \begin{align*}{1.01}^n
+                   & = 1.01 \cdot {1.01}^{n - 1}                               \\
+                   & < 1.01 \cdot (n - 1)! \hbox{ by the induction hypothesis} \\
+                   & < n \cdot (n - 1)! \hbox{ since $n > 3$}                  \\
+                   & = n!
+              \end{align*}
+
+              More generally, we can show that $a^n < n!$ for sufficiently large $n$. Consider the series $\sum_{i=0}^{\infty}\frac{a^n}{n!}$ and apply the ratio test:
+              \begin{align*}\lim_{n\to\infty}\frac{\frac{a^{n + 1}}{(n + 1)!}}{\frac{a^n}{n!}}
+                   & = \lim_{n\to\infty}\frac{a}{n} \\
+                   & = 0
+              \end{align*}
+              Thus, the series converges. In particular, this forces $\lim_{n\to\infty}\frac{a^n}{n!} = 0$.
+    \end{itemize}
+\end{solution}
+
+\begin{exercise}{A.3}
+    Prove the following statement by mathematical induction:
+    \[\sum_{i=0}^n a^i = \frac{a^{n+1} - 1}{a-1}\] where $a \neq 1$
+    is some fixed real number.
+
+    By the way, this is the sum of a geometric series, a useful
+    formula that one comes across often in algorithmic analysis.
+\end{exercise}
+
+\begin{solution}
+    The base case, $n = 0$, is trivial:
+    \[\sum_{i=0}^0 a^i = a^0  = 1\]
+    and
+    \[\frac{a^{0 + 1} - 1}{a - 1} = \frac{a - 1}{a - 1} = 1\]
+    Suppose this holds for $n = k - 1$. Then, for $n = k$, we have
+    \begin{align*}\sum_{i=0}^k a^i
+         & = \sum_{i=0}^{k - 1} a^i + a^k                                              \\
+         & = \frac{a^{k - 1 + 1} - 1}{a - 1} + a^k \hbox{ by the induction hypothesis} \\
+         & = \frac{a^k - 1}{a - 1} + a^k\left(\frac{a - 1}{a - 1}\right)               \\
+         & = \frac{a^k - 1 + a^k(a - 1)}{a - 1}                                        \\
+         & = \frac{a^k - 1 + a^{k + 1} - a^k}{a - 1}                                   \\
+         & = \frac{a^{k + 1} - 1}{a - 1}
+    \end{align*}
+    which completes the proof.
+\end{solution}
+
+
+\end{document}
+
