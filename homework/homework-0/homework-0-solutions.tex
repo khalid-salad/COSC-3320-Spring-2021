@@ -1,4 +1,4 @@
-\documentclass[draft]{article}
+\documentclass[final]{article}
 \usepackage{homework}
 
 \begin{document}
@@ -40,6 +40,7 @@
 \pagenumbering{arabic}
 
 \section{Class Questions}
+Each class question carries 2 points.
 \subsection{January 19}
 
 \begin{question}
@@ -51,7 +52,7 @@
 \end{solution}
 
 \begin{question}
-    Give a simple lowerbound for the number of quesitons asked for the Celebrity Problem.
+    Give a simple lowerbound for the number of questions asked for the Celebrity Problem.
 \end{question}
 
 \begin{solution}
@@ -63,7 +64,7 @@
 \end{question}
 
 \begin{solution}
-    When the remaining candidate, $X$, is left, we must determine if the other $n - 1$ people know $X$. However, the last person to be removed has \emph{already been confirmed} to know $X$, so this person needs not be asked. Thus, we can reduce the number of questions asked by 1 to $3n - 4$ in total.
+    When the remaining candidate, $X$, is left, we must determine if the other $n - 1$ people know $X$. However, the last person to be removed has \emph{already been confirmed} to know $X$, so this person need not be asked. Thus, we can reduce the number of questions asked by 1 to $3n - 4$ in total.
 \end{solution}
 
 \begin{question}
@@ -88,12 +89,14 @@
 \end{question}
 
 \begin{solution}
-    Algorithms with numerical inputs have \emph{the number of digits used to represent them} as their \emph{input size}\footnote{Strictly speaking, this can be any base greater than 1, though we typically use base-2 and note that all logarithm bases greater than 1 are asymptotically equal up to a constant factor.}. Then $b = \ceil{\log{n}}$ is our input size, and this algorithm has runtime $\bigO{\sqrt{n}} = \bigO{\sqrt{2^b}} = \bigO{2^{\frac{b}{2}}}$, which is \emph{exponential} in the input size.
+    Algorithms with numerical inputs have \emph{the number of digits (bits) used to represent them} as their \emph{input size}\footnote{Strictly speaking, this can be any base greater than 1, though we typically use base-2 and note that all logarithm bases greater than 1 are asymptotically equal up to a constant factor.}. Then $b = \ceil{\log{n}}$ is our input size, and this algorithm has runtime $\bigO{\sqrt{n}} = \bigO{\sqrt{2^b}} = \bigO{2^{\frac{b}{2}}}$, which is \emph{exponential} in the input size.
 \end{solution}
 
 \section{Textbook Exercises}
 \begin{exercise}{2.3}
+    (10 points)
     The algorithm \AlgName{\nameref*{alg:binsqrt}} is iterative. Modify it to make it a recursive algorithm.
+
 
     \begin{algorithm}[H]
         \caption[\AlgName{BinaryISqrt}]{\nameref*{alg:binsqrt} -- Binary Search Square Root}
@@ -120,6 +123,7 @@
 \end{exercise}
 
 \begin{solution}\mbox{}
+    (10 points for the correct pseudocode.)
     \begin{algorithm}[H]
         \caption[\AlgName{RecBinaryISqrt}]{\nameref*{alg:recbinsqrt} -- Recursive Binary Search Square Root}
         \label{alg:recbinsqrt}
@@ -143,7 +147,7 @@
     \end{algorithm}
 \end{solution}
 
-\begin{exercise}{2.9}
+\begin{exercise}{2.9} (25 points)
     There are $n$ adults in town A and they all need to go to town B. There is only a motorbike available which is owned by two boys.
     The motorbike can carry only one adult or up to two boys at a time (note that at one least person is needed to ride a bike). Using the motorbike, all the adults need to reach town B from town A.
     Show how this can be accomplished while, at the end, leaving the motorbike with the two boys in town A.
@@ -152,9 +156,9 @@
 \end{exercise}
 
 \begin{solution}
-    To begin, have both boys drive the motorbike to town $B$. Then, have \emph{one} boy drive the bike back to town $A$. From here, an adult in town $A$ can drive the bike to town $B$, and the boy who remained in town $B$ can drive the bike back to $A$. Repeat $n$ times.
+    To begin, have both boys drive the motorbike to town $B$. Then, have \emph{one} boy drive the bike back to town $A$. From here, an adult in town $A$ can drive the bike to town $B$, and the boy who remained in town $B$ can drive the bike back to $A$. Repeat $n$ times. (10 points for the algorithm)
 
-    We will show by induction that the above algorithm transports \emph{all} adults to town $B$ and leaves the two boys in town $A$. The base case is clear. Suppose that this holds for $n - 1$ adults. Then, for $n$ adults, the above algorithm transports one adult and leaves both boys in town $A$. Then, with $n - 1$ adults left, the process is repeated $n - 1$ times, the correctness of which follows from the induction hypothesis.
+    We will show by induction that the above algorithm transports \emph{all} adults to town $B$ and leaves the two boys in town $A$. The base case is clear. Suppose that this holds for $n - 1$ adults. Then, for $n$ adults, the above algorithm transports one adult and leaves both boys in town $A$. Then, with $n - 1$ adults left, the process is repeated $n - 1$ times, the correctness of which follows from the induction hypothesis. (7 points for correctness proof)
 
     Similarly, we note that the number of trips, $T(n)$, is given by $T(n) = T(n - 1) + 4$ with $T(1) = 4$. The base case is given, and again a simple induction argument shows that $T(n) = 4n$:
     \begin{align*}T(n)
@@ -163,9 +167,10 @@
          & = 4n - 4 + 4                                       \\
          & = 4n\qedhere
     \end{align*}
+    (8 points for analysis of trips)
 \end{solution}
 
-\begin{exercise}{2.12}
+\begin{exercise}{2.12} (25 points)
     Rank the following functions by order of growth; that is, find an
     arrangement $g_1, g_2, g_3, \dots$ of the functions satisfying
     $g_1=\bigO{g_2}$, $g_2=\bigO{g_3}, \dots$.
@@ -178,6 +183,8 @@
 \end{exercise}
 
 \begin{solution}
+    (9 points for the correct ordering; 16 points for the justification, 2 each for justifying a consecutive pair correctly.)
+
     The correct ordering is \[\frac{1}{n^2}, \log^5{n}, \frac{3n}{\log^3{n}}, n\log^2{n}, n^{1.5} + n, 4^{\log{n}}, \log{n}^{\log{n}}, {1.01}^n, n!\]
     We will show this one-by-one.
     \begin{itemize}
@@ -259,7 +266,7 @@
     \end{itemize}
 \end{solution}
 
-\begin{exercise}{A.3}
+\begin{exercise}{A.3} (10 points)
     Prove the following statement by mathematical induction:
     \[\sum_{i=0}^n a^i = \frac{a^{n+1} - 1}{a-1}\] where $a \neq 1$
     is some fixed real number.
@@ -269,6 +276,8 @@
 \end{exercise}
 
 \begin{solution}
+    (base case: 2 points: induction hypothesis and proof: 8 points).
+
     The base case, $n = 0$, is trivial:
     \[\sum_{i=0}^0 a^i = a^0  = 1\]
     and
