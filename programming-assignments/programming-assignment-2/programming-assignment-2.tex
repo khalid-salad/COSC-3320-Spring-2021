@@ -1,0 +1,110 @@
+\documentclass[draft]{article}
+\usepackage{programming}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Programming Assignment 2 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large NAME\par}
+        \vspace{0.5cm}
+        {\large \par} Due: Sunday, March 14, 2021\\11:59 PM
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    The writeup portion of your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your writeup must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    Before you begin the assignment, create an account on \href{https://leetcode.com/}{LeetCode} if you do not already have one.
+
+    \begin{problem}{\href{https://leetcode.com/problems/k-closest-points-to-origin/}{$k$-closest points to the origin}}{}
+    We have a list of points on the plane.  Find the $k$ closest points to the origin, $(0, 0)$.
+
+    (Here, the distance between two points on a plane is the Euclidean distance.)
+
+    You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in.)
+    \end{problem}
+
+    \begin{example}{}{}
+        Input: $\texttt{points} = [[1,3],[-2,2]]$, $k = 1$
+
+        Output: $[[-2,2]]$
+
+        Explanation:
+        The distance between $(1, 3)$ and the origin is $\sqrt{10}$.
+
+        The distance between $(-2, 2)$ and the origin is $\sqrt{8}$.
+
+        Since $\sqrt{8} < \sqrt{10}$, $(-2, 2)$ is closer to the origin.
+
+        We only want the closest $k = 1$ points from the origin, so the answer is just $[[-2,2]]$.
+    \end{example}
+
+    \begin{example}{}{}
+        Input: $\texttt{points} = [[3,3],[5,-1],[-2,4]]$, $k = 2$
+
+        Output: $[[3,3],[-2,4]]$
+
+        (The answer $[[-2,4],[3,3]]$ would also be accepted.)
+    \end{example}
+
+    It is important that you solve this problem using \emph{divide and conquer}. That is, you have to reduce the original problem into one or more subproblems, recursively solve the subproblems, and then combine the solutions to obtain the solution to the original problem. Your solution should take $\bigO{n}$ time \emph{in the worst case}. %A solution that does not use recursion \textbf{will receive a zero}.
+    %You should \emph{not use sorting} to solve this problem.
+    %Instead, you should specify the recursive approach, specify subproblem(s), and use a recurrence to bound the running time.
+
+    Note that the LeetCode webpage may accept a solution that is not $\bigO{n}$ in the worst case. By contrast, \textbf{we require the solution to be $\bigO{n}$ in the worst acse}. Additionally, some solutions on LeetCode do not use divide and conquer. These are \textbf{not} acceptable solutions. Some solutions posted may also be wrong. In any case,
+    a solution that is largely copied from another source (e.g., verbatim or made to look different by simply changing variable names) will be \textbf{in violation of the Academic Honesty Policy}.
+
+    The following must be submitted.
+    \begin{enumerate}[label=\textbf{(\alph*)}]
+        \item Writeup (50 Points)
+              \begin{itemize}
+                  \item Pseudocode for your solution, with an explanation in words why your solution works. (25 points)
+                  \item Analysis, showing the correctness of your algorithm and its  complexity (i.e., its runtime). (25 points).
+              \end{itemize}
+        \item Source Code (50 Points)
+              \begin{itemize}
+                  \item Write your solution in Python, C, C++, Java, or JavaScript.
+                  \item Your code should be well written and well commented.
+                  \item A comment with a link to your LeetCode profile (e.g., \texttt{https://leetcode.com/jane-doe/}) and a statement of whether or not your code was accepted by LeetCode. We will verify whether your code is accepted.
+                  \item We must be able to \emph{directly copy and paste your code into LeetCode} at \href{https://leetcode.com/problems/k-closest-points-to-origin/}{the LeetCode problem page}. If your code does not compile \textbf{on LeetCode}, it will \textbf{will receive zero points}. Under no circumstances will we attempt to modify any submission, so be sure the code you submit works.
+              \end{itemize}
+    \end{enumerate}
+    Please submit these files individually. \textbf{Do not submit as an archived file (zip file, tarball, etc.)}.
+\end{titlepage}
+
+\section{Pseudocode and Explanation}
+\begin{algorithm}[H]
+    \caption[\AlgName{ClosestPoints}]{\nameref*{alg:closestpoints} -- $k$ closest points to the origin}
+    \label{alg:closestpoints}
+    \begin{algorithmic}[1]
+        \Function{\nameref*{alg:closestpoints}}{$S$, $k$}
+        \AlgInput{An array $S$ of points in the plane and a positive integer $k$.}
+        \AlgOutput{The $k$ points in $S$ closest to the origin.}
+        \State $n\gets\card{S}$
+        \If {$n = \texttt{some number}$}\Comment{Base Case}
+        \State{Base Case Stuff}
+        \Else \Comment{Recursive Step}
+        \State{Recursive Step Stuff}
+        \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+\section{Analysis}
+
+
+\end{document}
