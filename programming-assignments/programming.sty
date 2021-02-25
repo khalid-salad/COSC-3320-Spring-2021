@@ -55,6 +55,8 @@
 \newtcbtheorem{example}{Example}{breakable,colback=blue!5,colframe=blue!60!white,fonttitle=\bfseries, separator sign={~$\blacktriangleright$}}{exa}
 \newtcbtheorem{theorem}{Theorem}{colback=gray!25,colframe=gray!90!black,fonttitle=\bfseries, separator sign={~$\blacktriangleright$}}{thm}
 
+\newtcbtheorem{lemma}{Lemma}{colback=gray!25,colframe=gray!90!black,fonttitle=\bfseries, separator sign={~$\blacktriangleright$}}{lem}
+
 
 \newenvironment{solution}{\begin{proof}[\textnormal{\textbf{Solution}}]}{\end{proof}}
 \newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
@@ -63,7 +65,7 @@
 \newcommand{\card}[1]{\left\lvert#1\right\rvert}
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert}
 \newcommand{\bigO}[1]{\mathcal{O}\left(#1\right)}
-\newcommand{\bigOm}[1]{\Omega\left(#1\right)}
+\newcommand{\bigOName}{\text{Big-}$\mathcal{O}$\xspace}\newcommand{\bigOm}[1]{\Omega\left(#1\right)}
 \newcommand{\bigTh}[1]{\Theta\left(#1\right)}
 \newcommand{\littleO}[1]{o\left(#1\right)}
 \newcommand{\littleOm}[1]{\omega\left(#1\right)}

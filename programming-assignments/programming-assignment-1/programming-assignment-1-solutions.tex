@@ -1,0 +1,163 @@
+\documentclass[final]{article}
+\usepackage{programming}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Programming Assignment 1 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large Solution\par}
+    \end{center}
+\end{titlepage}
+
+
+
+\section{Pseudocode and Explanation}
+Suppose we have the permutations as desired for some $n$, i.e., we have the permutations of $P_n = \set{a_1, a_2, \dots a_n}$ so that any consecutive permutations differ by a single swap (we will call this \emph{the swap requirement}). Now, pick a single permutation, say $[a_1, a_2, \dots, a_n]$, and consider how we can create $n + 1$ new permutations by inserting a new element (which we will denote by $N$):
+\begin{align*}
+     & [N, a_1, a_2, \dots, a_n]      \\
+     & [a_1, N, a_2, \dots, a_n]      \\
+     & [a_1, a_2, N, \dots, a_n]      \\
+     & \phantom{............}  \vdots \\
+     & [a_1, a_2, \dots, N, a_n]      \\
+     & [a_1, a_2, \dots, a_n, N]
+\end{align*}
+
+Now, these permutations clearly satisfy the swap requirement. Consider the next permutation, $\sigma$, of $P_n$. By construction, it must satsify the swap requirement on $\set{a_1, a_2, \dots a_n}$. In particular, then, ignoring the last element $N$, it differs by the last permutation above by a single swap. Then the permutation $\sigma + [N]$, i.e., the permutation $\sigma$ with $N$ appended to the end, differs from the above permutation by a single swap. For example, supposing $\sigma = [a_1, a_2, \dots, a_n, a_{n-1}]$, the permutation $[a_1, a_2, \dots, a_n, a_{n-1}, N]$ differs by a single swap from $[a_1, a_2, \dots, a_n, N]$. We then repeat the above process in the opposite direction:
+
+\begin{align*}
+     & [a_1, a_2, \dots, a_n, a_{n-1}, N]  \\
+     & [a_1, a_2, \dots, a_n, N, a_{n-1}]  \\
+     & [a_1, a_2, \dots, N, a_n, a_{n-1}]  \\
+     & \phantom{.................}  \vdots \\
+     & [a_1, a_2, N, \dots, a_n, a_{n-1}]  \\
+     & [a_1, N, a_2, \dots, a_n, a_{n-1}]  \\
+     & [N, a_1, a_2, \dots, a_n, a_{n-1}]
+\end{align*}
+Simply repeat for all permutations $\sigma\in P_n$, changing directions between iterations. This admits the following pseudocode.
+\begin{algorithm}[H]
+    \caption[\AlgName{Permutations}]{\nameref*{alg:permutations} -- Permutations of an Array }
+    \label{alg:permutations}
+    \begin{algorithmic}[1]
+        \Function{\nameref*{alg:permutations}}{$A$}
+        \AlgInput{An array $A$ of distinct elements.}
+        \AlgOutput{All $n!$ permutations of $A$ such that consecutive permutations differ by a single swap.}
+        \State $n\gets\card{A}$
+        \If {$n = 1$}\Comment{Base Case}
+        \State{\Return $A$}
+        \Else \Comment{Recursive Step}
+        \State $\texttt{perms} \gets []$
+        \State $A' \gets A[:n]$\Comment{$A'$ is the subarray containing the first $n - 1$ elements} \label{line:permsubarr}
+        \State $a \gets A[n - 1]$
+        \State{$\texttt{StartFromLeft} \gets \True$}
+        \For{$\sigma \in \Call{\nameref*{alg:permutations}}{A'}$} \label{line:permreccall}
+        \State $\texttt{perms}.\Call{Append}{\Call{\nameref*{alg:insertions}}{a, \sigma, \texttt{StartFromLeft}}}$\Comment{add insertions into \texttt{perms}}
+        \State $\texttt{StartFromLeft} \gets \neg \texttt{StartFromLeft}$
+        \EndFor
+        \State \Return \texttt{perms}
+        \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[H]
+    \caption[\AlgName{Insertions}]{\nameref*{alg:insertions} -- Function to insert element into array}
+    \label{alg:insertions}
+    \begin{algorithmic}[1]
+        \Function{Insertions}{$a$, $A$, \texttt{StartFromLeft}}
+        \AlgInput{Value $a$ to be inserted into array $A$ and boolean whether to start from left or right}
+        \AlgOutput{List of arrays so that $a$ is inserted}
+        \State $n\gets\card{A}$
+        \State $\texttt{output} \gets []$
+        \If{\texttt{StartFromLeft}}
+        \State $\texttt{range} \gets [0, 1, \dots, n]$
+        \Else
+        \State $\texttt{range} \gets [n, n-1, \dots, 0]$
+        \EndIf
+        \For{$i \in \texttt{range}$}
+        \State $\texttt{output}.\Call{Append}{A[:i] + [a] + A[i:]}$ \label{line:insertappend}
+        \EndFor
+        \State \Return \texttt{output}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+\section{Analysis}
+To see that the above algorithm is correct, first note that two permutations, $\sigma_1$ and $\sigma_2$, differ by a single swap if and only if they are identical at all but 2 indices. We first prove the following lemma:
+
+\begin{lemma}{}{insertions}
+    Fix some permutation and consider the insertions, as in \nameref{alg:insertions}, of any element. This set of insertions satisfies the swap requirement.
+\end{lemma}
+
+\begin{proof}
+    We prove this for left insertions. Consider some element of the set of insertions, \[A_i = [a_1, a_2, \dots, a_{i-1}, x, a_i, \dots, a_n]\] where $x$ is the inserted element. Then the next element is \[A_{i + 1} = [a_1, a_2, \dots, a_{i - 1}, a_i, x, a_{i + 1}, \dots, a_n]\] by construction. $A_i$ and $A_{i + 1}$ agree on the first $i - 1$ values and the last $n - i$ values, with the differences being $A_i[i] = x = A_{i+1}[i+1]$ and $A_i[i+1] = a_i = A_{i+1}[i + 2]$. Thus, they differ at exactly two indices, and must differ by a single swap.
+
+    The argument for right insertions is nearly identical and we leave it to the reader.
+\end{proof}
+
+Next, we prove that \nameref{alg:permutations} satsifies the swap requirement.
+
+\begin{theorem}{}{}
+    Algorithm \nameref{alg:permutations} outputs permutations that satisfy the swap requirements.
+\end{theorem}
+
+\begin{proof}
+    Without loss of generality, suppose the input array of length $k$ is $A_k = [1, 2, \dots, k]$. Proceed by induction on the length of the input array. The base case is trivially true. Suppose the algorithm is correct on an array of $A_{n-1} = [1, 2, \dots,  n - 1]$. Say $P = [\sigma_1, \sigma_2, \dots, \sigma_{(n-1)!}]$ are our permutations on $A_{n-1}$. By our induction hypothesis, permutation $\sigma_i$ and $\sigma_{i + 1}$ differ by a single swap.
+
+    Now, fix a permutation $\sigma_i = [a_1, a_2, \dots, a_{n-1}]$ as in the algorithm. We append the insertions of $n$ into $\sigma_i$ to our output and, by Lemma~\ref{lem:insertions}, these permutations satisfy the swap requirement. In particular, \emph{every} collection of these consecutive $n - 1$ permutations (which we will refer to as a group) satisfy the swap requirement. Thus, we need only show that the last permutation of group $i$ and the first permutation of group $i + 1$ satisfy the swap requirement.
+
+    Suppose \texttt{StartFromLeft} is \True. Then the last permutation of group $i$ is of the form \[A = [\sigma_i[0], \sigma_i[1], \dots, \sigma_i[n - 2], n]\] and the first permutation of group $i + 1$ is of the form \[B = [\sigma_{i+1}[0], \sigma_{i+1}[1], \dots, \sigma_{i+1}[n - 2], n]\] Clearly, these two permutations agree on the final element. Additionally, by our induction hypothesis, the subarrays $\sigma_i$ and $\sigma_{i+1}$ differ by exactly two elements, hence these two permutations $A$ and $B$ similarly differ by exactly two elements, and satisfy the swap requirement.
+
+    A similar argument applies when \texttt{StartFromLeft} is \False. Thus, these permutations satisfy the swap requirement.
+\end{proof}
+
+However, we have not yet fully demonstrated correctness. The astute reader might ask if we have repeated any permutations. We will show that this is impossible:
+
+\begin{theorem}{}{}
+    Algorithm \nameref{alg:permutations} outputs all $n!$ distinct permutations.
+\end{theorem}
+
+\begin{proof}
+    Proceed by induction. The base case is clear. Suppose that \nameref{alg:permutations} outputs all distinct $(n - 1)!$ permutations on $A_{n-1} = [1, 2, \dots, n - 1]$. Clearly, our algorithm outputs $n$ permutations for each permutation on $A_{n-1}$, for a total of $n!$. We will show that these are distinct.
+
+    Consider, two permutations $\sigma_i$ and $\sigma_j$ on $[1, 2, \dots, n]$, such that $\sigma_i = \sigma_j$. We will show that this forces $i = j$, which completes the proof. Since $\sigma_i = \sigma_j$, these permutations must have $n$ in the same location, i.e.,
+    \begin{align*}
+        \sigma_i & = [a_1, a_2, \dots, n, \dots, a_{n-1}] \\
+        \sigma_j & = [b_1, b_2, \dots, n, \dots, b_{n-1}]
+    \end{align*}
+    Now, consider the permutations on $A_{n-1}$:
+    \begin{align*}
+        \sigma_i' & = [a_1, a_2, \dots, a_{n-1}] \\
+        \sigma_j' & = [b_1, b_2, \dots, b_{n-1}]
+    \end{align*}
+    By our induction hypothesis, the permutations on $A_{n-1}$ are distinct, hence $i' = j'$. Then $\sigma_i$ and $\sigma_j$ belong to the same group. However, the set of permutations in a group are clearly all distinct. This forces $i = j$.
+\end{proof}
+
+To determine the runtime of \nameref{alg:permutations}, we must first determine the runtime of \nameref{alg:insertions}. There are $n + 1$ iterations of the process on line~\ref{line:insertappend}, each of which requires $\bigO{n}$ time (either you create the array each time and point to it, or you perform a single swap and copy the contents into $\texttt{output}[i]$, a linear time operation in either case). In total, this is $\bigO{n^2}$.
+
+With this, we can analyze the runtime:
+
+\begin{theorem}{}{}
+    The runtime of algorithm~\nameref{alg:permutations} is given by \[T(n) = nT(n-1) + \bigO{n^2}\] which has a runtime of $\bigO{(n+1)!}$.
+\end{theorem}
+
+\begin{proof}
+    Let $T(n)$ denote the runtime of \nameref{alg:permutations}. Since $A'$ in line~\ref{line:permsubarr} has length $n - 1$, the call to \nameref{alg:permutations} on line~\ref{line:permreccall} has runtime $T(n - 1)$. Additionally, for each call, we call \nameref{alg:insertions} on an array of length $n - 1$, which has runtime $\bigO{n^2}$, hence our recurrence is given by
+    \[T(n) = nT(n - 1) + \bigO{n^2}\]
+
+    We will show that this is $\bigO{(n + 1)!}$ by induction. The base case is clearly constant time. Suppose that $T(n - 1) \leq cn!$. Then
+    \begin{align*}T(n)
+         & = nT(n - 1) + \bigO{n^2}                                                       \\
+         & \leq ncn! + \bigO{n^2}\hbox{by the induction hypothesis}                       \\
+         & \leq ncn! + \alpha n^2\hbox{ for some $\alpha > 0$ by definition of \bigOName} \\
+         & = c(n + 1 - 1)n! + \alpha n^2                                                  \\
+         & = c(n + 1)! - cn! + \alpha n^2                                                 \\
+         & \leq c(n + 1)!\hbox{ for sufficiently large $c$}\qedhere
+    \end{align*}
+\end{proof}
+\end{document}
