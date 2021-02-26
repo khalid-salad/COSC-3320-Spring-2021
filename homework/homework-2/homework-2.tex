@@ -1,0 +1,133 @@
+\documentclass[draft]{article}
+\usepackage{homework}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Homework 2 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large NAME\par}
+        \vspace{0.5cm}
+        {\large \par} Due: Sunday, March 14, 2021\\11:59 PM
+    \end{center}
+
+
+    Read the \href{https://www.uh.edu/provost/policies-resources/honesty/_documents-honesty/academic-honesty-policy.pdf}{University of Houston Academic Honesty policy}.
+
+    \begin{tcolorbox}[title=Academic Honesty Policy,colback=red!15,colframe=red!65!black,fonttitle=\bfseries]All submitted work should be your own. Copying or using other people's work (including from the Web) will result in \(-\texttt{MAX}\) points, where \(\texttt{MAX}\) is the maximum possible number of points for that assignment. Repeat offenses will result in a failing grade for the course and will be reported to the Chair. If you have any questions, please reach out to the professor and the TAs. The best way to ask is on \href{https://piazza.com/uh/spring2021/cosc3320/home}{Piazza}.\\
+
+        By submitting this assignment, you affirm that you have followed the Academic Honesty Policy.
+    \end{tcolorbox}
+
+    %
+    Your submission \textbf{must be typed}. We prefer you use \LaTeX~to type your solutions --- \LaTeX~is the standard way to type works in mathematical sciences, like computer science, and is highly recommended; for more information on using \LaTeX, please see \href{https://piazza.com/class/kjxhee6ctqe6cj?cid=8}{this post on Piazza} --- but any method of typing your solutions (e.g., MS Word, Google Docs, Markdown) is acceptable. \textbf{Your submission must be in pdf format.} The assignment can be submitted \textbf{up to two days late for a penalty of 10\% per day.} A submission more than \textbf{two days late} will receive a \textbf{zero}.
+
+    \begin{tcolorbox}[title=Reading,fonttitle=\bfseries]
+        Chapters 5 and 6. In particular, several worked exercises with solutions are provided at the end of each chapter. Attempting to solve the worked exercises \textbf{before} seeing their solutions is a good learning technique.
+    \end{tcolorbox}
+    The exercises below are from \href{https://sites.google.com/site/gopalpandurangan/home/algorithms-course}{the book}. The book is updated periodically, so be sure to use the latest version.
+
+    \begin{tcolorbox}[title=Exercises,fonttitle=\bfseries]
+        5.18, 5.23, 6.11, 6.20
+    \end{tcolorbox}
+
+    \textbf{Justify your answers. Show appropriate work.}
+\end{titlepage}
+\vspace*{\fill}\begin{center}{\Huge This page intentionally left blank.}\end{center}\vspace*{\fill}\thispagestyle{empty}\clearpage
+\pagenumbering{arabic}
+
+\section{Class Questions}
+\subsection{February 09}
+
+\begin{question}
+    Show that the depth of the tree presented in class is $\bigO{\log_{\sfrac{3}{2}}n}$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{question}
+    Prove the correctness of the \texttt{Select} algorithm by mathematical induction.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\subsection{February 23}
+\begin{question}
+    Show that the algorithm \texttt{mult} given in class is $\bigO{n^2}$.
+\end{question}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\section{Textbook Exercises}
+\begin{exercise}{5.18}
+    Consider the \emph{max-sum} problem: Given an array $A$ of size $n$ containing positive and negative integers, determine indices $i$ and $j$, $1 \leq i \leq j \leq n$, such that $A[i] + A[i+1] + ... + A[j]$ is a maximum.
+    \begin{enumerate}[label=(\alph*)]
+        \item Consider the array $A = [5, 10, -15, 20, -4, 6, 4, 8, -10, 20]$. Find the indices $i$ and $j$ that give the maximum sum and state the maximum sum.
+        \item Give a \emph{divide and conquer} algorithm that runs in  $\bigO{n\log{n}}$ time. Assume, that adding or comparing two numbers takes constant time.
+
+              (Hint: Split the array into two (almost) equal parts and recursively solve the problem on the two parts. The non-trivial part is combining the solutions --- note that it is possible that the indices $i$ and $j$ that give the optimal sum might be on opposite parts.)
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{5.23}
+    You are given an unsorted array of $n \geq 1$ integers. Give an efficient divide and conquer algorithm to output an element in the array that occurs more than 3 times, if such an element exists.
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{6.11}
+    Consider the following \emph{variant} of the max-sum problem.
+
+    Given an array $A$ of size $n$ containing positive and negative integers, the goal is to determine indices $i$ and $j$, $1 \leq i \leq j \leq n$, such that $A[i] + A[i+1] + ... + A[j] - A[k]$ is a \textbf{maximum}, where $k$ can be any index between $i$ and $j$, i.e., $ i \leq k \leq j$. In other words, we are allowed to exclude \textbf{up to} one element (any one) in the contiguous subarray $A[i], \dots, A[j]$, including $A[i]$ or $A[j]$. Note that a solution subarray can be contiguous as well --- this is captured b allowing $k$ to be $A[i]$ or $A[j]$, which means that the subarray is contiguous.
+
+    Give a dynamic programming (DP) algorithm that computes the optimum value of the modified max-sum problem, i.e., we are interested in just computing the value of the optimum solution.
+    \begin{enumerate}
+        \item Specify the subproblems, clearly explaining your notation.
+        \item Give a recursive formulation that relates how you can solve larger-sized subproblems from smaller-sized subproblems. Also mention the base cases.
+        \item Implement your formulation by a DP algorithm and a memoized recursive algorithm.
+        \item Analyze the runtime of your algorithms.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\begin{exercise}{6.20}
+
+    You are given a stick of length $n$ units. Your goal is to cut the stick into different pieces (each piece should be of integer length only) so that the total value of all the pieces is \emph{maximized}. A piece of length $i$ units has value $v_i$, for $i = 1, 2, \dots, n$. You should design a dynamic programming algorithm that determines the maximum total value that is possible.
+    \begin{enumerate}[label=(\roman*)]
+        \item Consider the sequence of 7 numbers: $2,3,4,5,6,7,9$. Let the $i^{\text{th}}$ number in the sequence represents the value of piece of length $i$, i.e., the value of piece of length $1$ is 2, of length 2 is 3, length 3 is 4 and so on. What is the best way to cut the pieces for a stick of length 7? What is the maximum value ?
+        \item Define the subproblems for your DP solution on a general instance of the problem where the stick is of length $n$ and a piece of length $i$ has value $v_i$.
+        \item Give a recursive formulation to solve the subproblems. Don't forget the base cases.
+        \item What is the running time of your solution?
+        \item Write a DP algorithm (give pseudocode) that outputs the maximum value.
+        \item Describe an algorithm to output the sizes of the pieces of the cut that corresponds to the maximum value.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    TYPE SOLUTION HERE.
+\end{solution}
+
+\end{document}
+
