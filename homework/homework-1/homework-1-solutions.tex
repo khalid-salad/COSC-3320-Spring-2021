@@ -1,0 +1,339 @@
+\documentclass[draft]{article}
+\usepackage{homework}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Homework 1 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large Solutions\par}
+    \end{center}
+\end{titlepage}
+\vspace*{\fill}\begin{center}{\Huge This page intentionally left blank.}\end{center}\vspace*{\fill}\thispagestyle{empty}\clearpage
+\pagenumbering{arabic}
+
+\section{Class Questions}
+\subsection{January 26}
+
+\begin{question}
+    Show that any degree $d$ polynomial $p(n) = a_0n^d + a_1n^{d - 1} + \dots + a_{n-1}n + a_n$, with $a_0 > 0$, is $\bigO{n^d}$.
+\end{question}
+
+\begin{solution}
+    \begin{align*}\lim_{n\to\infty}\frac{a_0n^d + a_1n^{d - 1} + \dots + a_{n-1}n + a_n}{n^d}
+         & =\lim_{n\to\infty}a_0 + \frac{a_1}{n} + \dots + \frac{a_{n-1}}{n^{d-1}} + \frac{a_n}{n^d} \\
+         & = a_0
+    \end{align*}
+\end{solution}
+
+\begin{question}
+    Show that, for any $a > 1$, $n^b = \bigO{a^n}$.
+\end{question}
+
+\begin{solution}
+    First, this is clearly true if $b < 0$. Otherwise, we can apply the limit definition. Say $b$ is an integer. Then
+    \begin{align*}\lim_{n\to\infty}\frac{n^b}{a^n}
+         & = \lim_{n\to\infty}\frac{bn^{b-1}}{a^n\ln{a}}        \\
+         & = \lim_{n\to\infty}\frac{b(b-1)n^{b-2}}{a^n\ln^2{a}} \\
+         & \phantom{..}\vdots                                   \\
+         & = \lim_{n\to\infty}\frac{b!}{a^n\ln^b{a}}            \\
+         & = 0
+    \end{align*}
+    If, on the other hand, $b$ is not an integer, then $b = \floor{b} + r$, and
+    \begin{align*}\lim_{n\to\infty}\frac{n^b}{a^n}
+         & = \lim_{n\to\infty}\frac{bn^{b-1}}{a^n\ln{a}}                     \\
+         & = \lim_{n\to\infty}\frac{b(b-1)n^{b-2}}{a^n\ln^2{a}}              \\
+         & \phantom{..}\vdots                                                \\
+         & = \lim_{n\to\infty}\frac{b(b-1)\dots(1+r)(r)b^{r-1}}{a^n\ln^b{a}} \\
+         & = 0
+    \end{align*}
+
+    Alternatively, we can approach this more elegantly by considering the series \[S_n = \sum_{n=0}^{\infty}\frac{n^b}{a^n}\] If this series converges, then \[\lim_{n\to\infty}\frac{n^b}{a^n} = 0\] Apply the ratio test on $\sfrac{n^b}{a^n}$
+    \begin{align*}\lim_{n\to\infty}\frac{\sfrac{(n + 1)^b}{a^{n + 1}}}{\sfrac{n^b}{a^n}}
+         & = \lim_{n\to\infty}\frac{a^n(n+1)^b}{a^{n+1}n^b}           \\
+         & = \lim_{n\to\infty}\frac{1}{a}\left(1+\frac{1}{n}\right)^b \\
+         & = \frac{1}{a}
+    \end{align*}
+    The above limit is less than 1, since $a > 1$, hence the series converges by the ratio test. Thus, \[\lim_{n\to\infty}\frac{n^b}{a^n} = 0\] and $n^b=\bigO{a^n}$.
+\end{solution}
+
+\begin{question}
+    Show that $a^{\log_b{n}} = n^{\log_b{a}}$.
+\end{question}
+
+\begin{solution}
+    Let $x = \log_b{a}\log_b{n}$. Then
+    \begin{align*}b^x
+         & = b^{\log_b{a}\log_b{n}}                 \\
+         & = \left(b^{\log_b{a}}\right)^{\log_b{n}} \\
+         & = a^{\log_b{n}}
+    \end{align*}
+    Similarly,
+    \begin{align*}b^x
+         & = b^{\log_b{a}\log_b{n}}                 \\
+         & = b^{\log_b{n}\log_b{a}}                 \\
+         & = \left(b^{\log_b{n}}\right)^{\log_b{a}} \\
+         & = n^{\log_b{a}}\qedhere
+    \end{align*}
+\end{solution}
+
+\subsection{January 28}
+\begin{question}
+    Prove by mathematical induction that the gcd algorithm given in class is correct. You may assume $\gcd(a,b)=\gcd(b, a \bmod b)$.
+\end{question}
+
+\begin{solution}
+    Carefully formulate the induction hypothesis: we wish to show that, for all $n$, the algorithm given in class (which we will refer to as the Euclidean Algorithm going forward) for determining $\gcd(a, b)$ for any $a\leq n$, $b\leq n$, is correct. Notice that this is equivalent to the statement ``the Euclidean algorithm correctly determines $\gcd(a, b)$ for any non-negative integers $a$ and $b$''. From here, the proof is straightforward: the base case is trivial. Assume this is true for all $k < n$. Now, consider $\gcd(a, b)$ for $a\leq n$ and $b\leq n$. Without loss of generality, assume $a \geq b$ (since we can simply swap $a$ and $b$ if this is untrue).
+
+    If $a < n$, we are done by our induction hypothesis. Otherwise, $a = n$. Now, if $b = n$, we are again done (since then $\gcd(a, b) = n$). Otherwise, the Euclidean algorithm updates $\gcd(a, b) \gets \gcd(b, a \bmod b)$. Since $b < n$, correctness follows from the induction hypothesis.
+\end{solution}
+
+\subsection{February 4}
+\begin{question}
+    Solve $T(n) = 3T(\sfrac{n}{2}) + n^2$.
+\end{question}
+
+\begin{solution}
+    Write $a = 3$, $b=2$, and $f(n) = n^2$. Then $af(n/b) = 3(\sfrac{n}{2})^2=\sfrac{3n^2}{4}$, hence $c =\sfrac{3}{4} < 1$. Thus, $T(n) = \bigTh{f(n)} = \bigTh{n^2}$.
+\end{solution}
+
+\begin{question}
+    Show the correctness of \texttt{MergeSort} using Induction. You may assume the \texttt{Merge} subroutine is correct.
+\end{question}
+
+\begin{solution}
+    The base case is trivial. Consider \texttt{MergeSort} on an array of length $n$. \texttt{MergeSort} is then recursively called on subarrays of length $\sfrac{n}{2}$, which are then sorted by our induction hypothesis. Then, by the correctness of the \texttt{Merge} procedure, the final array must be sorted.
+\end{solution}
+
+\begin{question}
+    Argue that QuickSort cannot take more than $\binom{n}{2} = \sfrac{n(n - 1)}{2}$ comparisons.
+\end{question}
+
+\begin{solution}
+    In the worst case, the pivot is chosen so that the partitions are of size $n - 1$ and $1$, hence there are $n - 1$ comparisons. If this happens at each step, this totals \[(n - 1) + (n - 2) + \dots + 2 + 1 = \binom{n}{2}\] comparisons.
+\end{solution}
+
+\section{Textbook Exercises}
+\begin{exercise}{4.1}
+    Prove the asymptotic bound for the following recurrences by using
+    induction. Assume that base cases of all the recurrences are
+    constants i.e., $ T(n) = \bigTh{1}$, for $n < c$ where $c$ is some
+    constant.
+    \begin{enumerate}[label=(\alph*)]
+        \item $T(n) \leq 2 T(n/2) + n^2$. Then, $T(n) = \bigO{n^2 \log n}$.
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    The base case is given. Suppose $T(k) \leq ck^2\log{k}$ for all $k < n$. Then
+    \begin{align*}T(n)
+         & \leq 2T(n/2) + n^2                                                                        \\
+         & \leq 2c\left(\frac{n}{2}\right)^2\log\frac{n}{2} + n^2\hbox{ by the induction hypothesis} \\
+         & = \frac{c}{2}n^2\left(\log{n} - \log{2}\right) + n^2                                      \\
+         & = \frac{c}{2}n^2\left(\log{n} - 1\right) + n^2                                            \\
+         & = \frac{c}{2}n^2\log{n} -\frac{c}{2}n^2 + n^2                                             \\
+         & = \frac{c}{2}n^2\log{n} + \left(1 - \frac{c}{2}\right)n^2                                 \\
+         & \leq \frac{c}{2}n^2\log{n}\hbox{ for $c \geq 2$}                                          \\
+         & \leq cn^2\log{n}\qedhere
+    \end{align*}
+\end{solution}
+
+\begin{exercise}{4.3(6)}
+    Solve the following recurrences. Give the answer in terms of \emph{Big-Theta} notation.  Solve up to constant
+    factors, i.e., your answer must give the correct function for $T(n)$, up to constant factors.
+    You can  assume constant base cases, i.e., $T(1) = T(0) = c$, where $c$ is a positive constant.
+    You can ignore floors and ceilings. You can use the DC Recurrence Theorem if it applies.
+    \begin{enumerate}[start=6, label=\arabic*.]
+        \item $T(n) = 4 T(n/2) + n^3$
+    \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+    Write $a = 4$, $b=2$, and $f(n) = n^3$. Then $af(n/b) = 4(\sfrac{n}{2})^3=\sfrac{n^2}{2}$, hence $c =\sfrac{1}{2} < 1$. Thus, $T(n) = \bigTh{f(n)} = \bigTh{n^3}$.
+\end{solution}
+
+\begin{exercise}{4.4}
+    You are given an array consisting of $n$ numbers. A popular element is an element
+    that occurs (strictly) \textbf{more than} $n/2$ times in the array. Give an algorithm that finds
+    the popular element in the array if it exists, otherwise it should output ``NO''. Your algorithm should take no more than $2n$ comparisons. (As usual, we only count the comparisons between array elements.)
+    Give pseudocode, argue its correctness, and show that your algorithm indeed takes no more than $2n$ comparisons.
+    (Hint: Use a decrease and conquer strategy, similar to the celebrity problem.)
+\end{exercise}
+
+\begin{solution}
+    Let $A$ denote our array and define $\Call{\nameref*{alg:boyermoore}}{A}$, so that, if a popular element of $A$ exists, it returns it, as follows
+    \begin{algorithm}[H]
+        \caption[\AlgName{Popular-Candidate}]{Determine if a popular element candidate exists}
+        \label{alg:boyermoore}
+        \begin{algorithmic}[1]
+            \Function{\nameref*{alg:boyermoore}}{$A$}
+            \If{$|A| = 1$}
+            \State \Return $A[0]$
+            \ElsIf{$|A| = 2}$
+                \If{$A[0] = A[1]$}
+                \State \Return $A[0]$
+                \Else
+                \State \Return \Null
+                \EndIf
+                \Else
+                \If{two distinct elements exist in $A$}
+                \State remove them
+                \Else
+                \State \Return $A[0]$
+            \EndIf
+            \EndIf
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+    The key intuition here is to observe that, if $p$ is a popular element, then it is still popular when two \emph{distinct} elements of $A$ are removed. The proof is straightforward: if neither removed element is $p$, there are now $n - 2$ elements remaining, but $\sfrac{n}{2} > \sfrac{(n - 2)}{2}$ occurrences of $p$. If exactly one element is $p$, then there are $\sfrac{(n - 1)}{2} > \sfrac{(n - 2)}{2}$ occurrences of $p$, and it is still popular. Since the elements are distinct, they cannot \emph{both} be $p$. Correctness follows directly from this: algorithm~\nameref*{alg:boyermoore} will return the popular element if it exists. If it does not exist, we must determine so, as in the following pseudocode
+
+    \begin{algorithm}[H]
+        \caption[\AlgName{Popular-Element}]{Return a popular element, if it exists, else return \Null}
+        \label{alg:checkboyermoore}
+        \begin{algorithmic}[1]
+            \Function{\nameref*{alg:checkboyermoore}}{$A$}
+            \State $n\gets\card{A}$
+            \State $\texttt{candidate} \gets \Call{\nameref{alg:boyermoore}}{A}$
+            \State $\texttt{count} \gets 0$
+            \ForEach{$\texttt{ele} \in A$}
+            \If{$\texttt{ele} = \texttt{candidate}$}
+            \State $\texttt{count} \gets \texttt{count} + 1$
+            \EndIf
+            \EndForEach
+            \If{$\texttt{count} > \sfrac{n}{2}$}
+            \State \Return \texttt{candidate}
+            \Else
+            \State \Return \Null
+            \EndIf
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+    A note: \nameref*{alg:boyermoore} should be implemented to take only $n$ comparisons. This can be done in a variety of ways (the implementation details of which will vary from language to language), but the basic idea is to have one index $i$ at the first element and a second index $j$ at the second. Increment $j$ until the elements differ, then remove the elements.
+\end{solution}
+
+\begin{exercise}{5.1}
+    Determine the total number of comparisons that each of the following algorithms takes on $S = [8, 2, 6, 7, 5, 1, 4, 3]$.
+    \begin{itemize}[nosep]
+        \item \AlgName{SimpleSort}
+        \item \AlgName{MergeSort}
+        \item \AlgName{QuickSort}
+    \end{itemize}
+    Show the steps of the algorithm when calculating the number of comparisons.
+\end{exercise}
+
+\begin{solution}
+    \AlgName{SimpleSort}
+    \begin{enumerate}[nosep]
+        \item $[{\color{red}8},{\color{red}2},6,7,5,1,4,3]\rightarrow [{\color{red}2},{\color{red}8},6,7,5,1,4,3]$
+        \item $[{\color{red}2},8,{\color{red}6},7,5,1,4,3]$
+        \item $[{\color{red}2},8,6,{\color{red}7},5,1,4,3]$
+        \item $[{\color{red}2},8,6,7,{\color{red}5},1,4,3]$
+        \item $[{\color{red}2},8,6,7,5,{\color{red}1},4,3]\rightarrow [{\color{red}1},8,6,7,5,{\color{red}2},4,3]$
+        \item $[{\color{red}1},8,6,7,5,2,{\color{red}4},3]$
+        \item $[{\color{red}1},8,6,7,5,2,4,{\color{red}3}]$
+        \item $[1,{\color{red}8},{\color{red}6},7,5,2,4,3]\rightarrow [1,{\color{red}6},{\color{red}8},7,5,2,4,3]$
+        \item $[1,{\color{red}6},8,{\color{red}7},5,2,4,3]$
+        \item $[1,{\color{red}6},8,7,{\color{red}5},2,4,3]\rightarrow [1,{\color{red}5},8,7,{\color{red}6},2,4,3]$
+        \item $[1,{\color{red}5},8,7,6,{\color{red}2},4,3]\rightarrow [1,{\color{red}2},8,7,6,{\color{red}5},4,3]$
+        \item $[1,{\color{red}2},8,7,6,5,{\color{red}4},3]$
+        \item $[1,{\color{red}2},8,7,6,5,4,{\color{red}3}]$
+        \item $[1,2,{\color{red}8},{\color{red}7},6,5,4,3]\rightarrow [1,2,{\color{red}7},{\color{red}8},6,5,4,3]$
+        \item $[1,2,{\color{red}7},8,{\color{red}6},5,4,3]\rightarrow [1,2,{\color{red}6},8,{\color{red}7},5,4,3]$
+        \item $[1,2,{\color{red}6},8,7,{\color{red}5},4,3]\rightarrow [1,2,{\color{red}5},8,7,{\color{red}6},4,3]$
+        \item $[1,2,{\color{red}5},8,7,6,{\color{red}4},3]\rightarrow [1,2,{\color{red}4},8,7,6,{\color{red}5},3]$
+        \item $[1,2,{\color{red}4},8,7,6,5,{\color{red}3}]\rightarrow [1,2,{\color{red}3},8,7,6,5,{\color{red}4}]$
+        \item $[1,2,3,{\color{red}8},{\color{red}7},6,5,4]\rightarrow [1,2,3,{\color{red}7},{\color{red}8},6,5,4]$
+        \item $[1,2,3,{\color{red}7},8,{\color{red}6},5,4]\rightarrow [1,2,3,{\color{red}6},8,{\color{red}7},5,4]$
+        \item $[1,2,3,{\color{red}6},8,7,{\color{red}5},4]\rightarrow [1,2,3,{\color{red}5},8,7,{\color{red}6},4]$
+        \item $[1,2,3,{\color{red}5},8,7,6,{\color{red}4}]\rightarrow [1,2,3,{\color{red}4},8,7,6,{\color{red}5}]$
+        \item $[1,2,3,4,{\color{red}8},{\color{red}7},6,5]\rightarrow [1,2,3,4,{\color{red}7},{\color{red}8},6,5]$
+        \item $[1,2,3,4,{\color{red}7},8,{\color{red}6},5]\rightarrow [1,2,3,4,{\color{red}6},8,{\color{red}7},5]$
+        \item $[1,2,3,4,{\color{red}6},8,7,{\color{red}5}]\rightarrow [1,2,3,4,{\color{red}5},8,7,{\color{red}6}]$
+        \item $[1,2,3,4,5,{\color{red}8},{\color{red}7},6]\rightarrow [1,2,3,4,5,{\color{red}7},{\color{red}8},6]$
+        \item $[1,2,3,4,5,{\color{red}7},8,{\color{red}6}]\rightarrow [1,2,3,4,5,{\color{red}6},8,{\color{red}7}]$
+        \item $[1,2,3,4,5,6,{\color{red}8},{\color{red}7}]\rightarrow [1,2,3,4,5,6,{\color{red}7},{\color{red}8}]$
+    \end{enumerate}
+
+    \AlgName{MergeSort}
+    \begin{enumerate}[nosep]
+        \item $[{\color{red}8}] [{\color{red}2}]\rightarrow[2, 8]$
+        \item $[{\color{red}6}] [{\color{red}7}]\rightarrow[6, 7]$
+        \item $[{\color{red}2},8] [{\color{red}6},7]\rightarrow[2]$
+        \item $[2,{\color{red}8}] [{\color{red}6},7]\rightarrow[2, 6]$
+        \item $[2,{\color{red}8}] [6,{\color{red}7}]\rightarrow[2, 6, 7, 8]$
+        \item $[{\color{red}5}] [{\color{red}1}]\rightarrow[1, 5]$
+        \item $[{\color{red}4}] [{\color{red}3}]\rightarrow[3, 4]$
+        \item $[{\color{red}1},5] [{\color{red}3},4]\rightarrow[1]$
+        \item $[1,{\color{red}5}] [{\color{red}3},4]\rightarrow[1, 3]$
+        \item $[1,{\color{red}5}] [3,{\color{red}4}]\rightarrow[1, 3, 4, 5]$
+        \item $[{\color{red}2},6,7,8] [{\color{red}1},3,4,5]\rightarrow[1]$
+        \item $[{\color{red}2},6,7,8] [1,{\color{red}3},4,5]\rightarrow[1, 2]$
+        \item $[2,{\color{red}6},7,8] [1,{\color{red}3},4,5]\rightarrow[1, 2, 3]$
+        \item $[2,{\color{red}6},7,8] [1,3,{\color{red}4},5]\rightarrow[1, 2, 3, 4]$
+        \item $[2,{\color{red}6},7,8] [1,3,4,{\color{red}5}]\rightarrow[1, 2, 3, 4, 5, 6, 7, 8]$
+    \end{enumerate}
+
+    \AlgName{QuickSort}
+    \begin{enumerate}[nosep]
+        \item $[{\color{red}8},{\color{red}2},6,7,5,1,4,3]\rightarrow [2], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,{\color{red}6},7,5,1,4,3]\rightarrow [2,6], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,6,{\color{red}7},5,1,4,3]\rightarrow [2,6,7], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,6,7,{\color{red}5},1,4,3]\rightarrow [2,6,7,5], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,6,7,5,{\color{red}1},4,3]\rightarrow [2,6,7,5,1], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,6,7,5,1,{\color{red}4},3]\rightarrow [2,6,7,5,1,4], [{\color{red}8}], []$
+        \item $[{\color{red}8},2,6,7,5,1,4,{\color{red}3}]\rightarrow [2,6,7,5,1,4,3], [{\color{red}8}], []$
+        \item $[{\color{red}2},{\color{red}6},7,5,1,4,3]\rightarrow [], [{\color{red}2}], [6]$
+        \item $[{\color{red}2},6,{\color{red}7},5,1,4,3]\rightarrow [], [{\color{red}2}], [6,7]$
+        \item $[{\color{red}2},6,7,{\color{red}5},1,4,3]\rightarrow [], [{\color{red}2}], [6,7,5]$
+        \item $[{\color{red}2},6,7,5,{\color{red}1},4,3]\rightarrow [1], [{\color{red}2}], [6,7,5]$
+        \item $[{\color{red}2},6,7,5,1,{\color{red}4},3]\rightarrow [1], [{\color{red}2}], [6,7,5,4]$
+        \item $[{\color{red}2},6,7,5,1,4,{\color{red}3}]\rightarrow [1], [{\color{red}2}], [6,7,5,4,3]$
+        \item $[{\color{red}6},{\color{red}7},5,4,3]\rightarrow [],[{\color{red}6}],[7]$
+        \item $[{\color{red}6},7,{\color{red}5},4,3]\rightarrow [5],[{\color{red}6}],[7]$
+        \item $[{\color{red}6},7,5,{\color{red}4},3]\rightarrow [5,4],[{\color{red}6}],[7]$
+        \item $[{\color{red}6},7,5,4,{\color{red}3}]\rightarrow [5,4,3],[{\color{red}6}],[7]$
+        \item $[{\color{red}5},{\color{red}4},3]\rightarrow[4][{\color{red}5}][]$
+        \item $[{\color{red}5},4,{\color{red}3}]\rightarrow[4,3][{\color{red}5}][]$
+        \item $[{\color{red}4},{\color{red}3}]\rightarrow[3][{\color{red}4}][]$
+    \end{enumerate}
+\end{solution}
+
+\begin{exercise}{5.9}
+    Given three SORTED (in ascending order) arrays $A[1..n], B[1..n]$,
+    and $C[1..n]$, each containing $n$ numbers, give an $\bigO{\log n}$-time algorithm (again, counting the number of comparisons) to find the $\nth{n}$ smallest number of all $3n$
+    elements in arrays $A, B$, and $C$.
+\end{exercise}
+
+\begin{solution}
+    Let $i = \floor{\sfrac{n}{3}}$ and define $a=A[i]$, $b = B[i]$, $c = C[i]$. Without loss of generality, say $a = \min(a, b, c)$. Now, there are at most $3\floor{\sfrac{n}{3}} < n$ elements in $A$, $B$, and $C$ less than $a$, hence we can remove these $\floor{\sfrac{n}{3}}$ smallest elements from $A$.
+
+    \[A = [\underbrace{a_0, a_1, \dots, a_{i-1}}_{\text{remove these}}, a_i, \dots, a_{n - 1}]\]
+
+    In the same vein, set $i' = 2\floor{\sfrac{n}{3}}$ and let $b' = B[i']$. Since $b$ is sorted and $a < b$, $a < b < b'$, hence there are at least $\floor{\sfrac{n}{3}} + 2\floor{\sfrac{n}{3}}$ elements less than $b'$, and we can remove all elements to the right of $b'$
+
+    \[B = [b_0, b_1, \dots, b_{i'-1}, \underbrace{b_{i'}, \dots, b_{n - 1}}_{\text{remove these}}]\]
+
+    And similarly for $C$
+
+    \[C = [c_0, c_1, \dots, c_{i'-1}, \underbrace{c_{i'}, \dots, c_{n - 1}}_{\text{remove these}}]\]
+
+    Leaving us with 3 arrays
+    \begin{align*}
+        A' & = [a_i, a_{i + 1}, \dots, a_{n - 1}] \\
+        B' & = [b_0, b_1, \dots, b_{i'-1}]        \\
+        C' & = [c_0, c_1, \dots, c_{i'-1}]
+    \end{align*}
+    each of length $2\floor{\sfrac{n}{3}}$. This removal requires a constant number of comparisons, and we will perform this $\bigO{\log{n}}$ times (since we remove approximately a third of the elements at each step), for a total $\bigO{\log{n}}$ comparisons.
+
+\end{solution}
+
+\end{document}
+
