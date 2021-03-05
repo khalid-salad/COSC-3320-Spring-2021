@@ -234,7 +234,7 @@
     element at a time. If the candidate element is set to null, we set it to the currently scanned element.
     Otherwise, we compare the candidate element with the current element and if they are equal, we increment
     the count by 1; if they are not equal, we decrement the count by 1. If the count becomes zero, then
-    we also rest the candidate element to null.  Note that this takes at most $n$ comparisons.
+    we also reset the candidate element to null.  Note that this algorithm takes at most $n$ comparisons in total.
 
     Checking the candidate further as in  Algorithm \nameref*{alg:checkboyermoore} takes additional $n$ comparisons.
     So the total number of comparisons is at most $2n$.
