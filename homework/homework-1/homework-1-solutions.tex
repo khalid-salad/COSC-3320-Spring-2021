@@ -85,7 +85,7 @@
 \end{solution}
 
 \subsection{January 28}
-\begin{question} 
+\begin{question}
     Prove by mathematical induction that the gcd algorithm given in class is correct. You may assume $\gcd(a,b)=\gcd(b, a \bmod b)$. (5 points)
 \end{question}
 
@@ -111,10 +111,10 @@
 \begin{solution}
     Let $n$ be the size of the array to be sorted. The induction is on $n$.
     The base case (i.e., $n \leq 1$)  is trivial.
-    
+
     Induction hypothesis: Assume that the algorithm is correct on arrays of size less than $n$.
     We show that it is correct for an array of size $n$.
-     Consider \texttt{MergeSort} on an array of length $n$. \texttt{MergeSort} is then recursively called on subarrays of length $\sfrac{n}{2}$, which are then sorted by our induction hypothesis. Then, by the correctness of the \texttt{Merge} procedure, the input array of length $n$ must be sorted.
+    Consider \texttt{MergeSort} on an array of length $n$. \texttt{MergeSort} is then recursively called on subarrays of length $\sfrac{n}{2}$, which are then sorted by our induction hypothesis. Then, by the correctness of the \texttt{Merge} procedure, the input array of length $n$ must be sorted.
 \end{solution}
 
 \begin{question}
@@ -124,13 +124,13 @@
 \begin{solution}
     In QuickSort, in every recursive call, one of the comparison elements has to be a pivot.
     Once the recursive call is finished, the pivot is never again compared (as it is not part of the parititioned
-    elements). Hence no two elements are compared more than once. Since there are only 
+    elements). Hence no two elements are compared more than once. Since there are only
     $\binom{n}{2} = \sfrac{n(n - 1)}{2}$ elements, that is the worst-case number of comparisons.
-    \end{solution}
+\end{solution}
 
 \section{Textbook Exercises}
 \begin{exercise}{4.1}
-(10 points)
+    (10 points)
     Prove the asymptotic bound for the following recurrences by using
     induction. Assume that base cases of all the recurrences are
     constants i.e., $ T(n) = \bigTh{1}$, for $n < c$ where $c$ is some
@@ -155,7 +155,7 @@
 \end{solution}
 
 \begin{exercise}{4.3(6)}
-(5 points)
+    (5 points)
     Solve the following recurrences. Give the answer in terms of \emph{Big-Theta} notation.  Solve up to constant
     factors, i.e., your answer must give the correct function for $T(n)$, up to constant factors.
     You can  assume constant base cases, i.e., $T(1) = T(0) = c$, where $c$ is a positive constant.
@@ -170,7 +170,7 @@
 \end{solution}
 
 \begin{exercise}{4.4}
-(25 points)
+    (25 points)
     You are given an array consisting of $n$ numbers. A popular element is an element
     that occurs (strictly) \textbf{more than} $n/2$ times in the array. Give an algorithm that finds
     the popular element in the array if it exists, otherwise it should output ``NO''. Your algorithm should take no more than $2n$ comparisons. (As usual, we only count the comparisons between array elements.)
@@ -228,21 +228,21 @@
     \end{algorithm}
 
     A note: \nameref*{alg:boyermoore} can  be easily implemented to take only $n$ comparisons. Keep
-    one element as a ``candidate" element  (can be empty) throughout the algorithm. Initially this is set  to ``empty."
-    We also maintain another integer variable called ``count" which counts the number of occurrences
+    one element as a ``candidate'' element  (can be empty) throughout the algorithm. Initially this is set  to ``empty.''
+    We also maintain another integer variable called ``count'' which counts the number of occurrences
     of the candidate element.  count is initially set to 0. We then scan the  array (starting from the first element), one
     element at a time. If the candidate element is set to null, we set it to the currently scanned element.
     Otherwise, we compare the candidate element with the current element and if they are equal, we increment
     the count by 1; if they are not equal, we decrement the count by 1. If the count becomes zero, then
     we also rest the candidate element to null.  Note that this takes at most $n$ comparisons.
-    
+
     Checking the candidate further as in  Algorithm \nameref*{alg:checkboyermoore} takes additional $n$ comparisons.
     So the total number of comparisons is at most $2n$.
-    
+
     (15 points for getting the main ideas of the algorithm and algorithm explanation; 5 points for pseudocode
     and 5 points for analysis).
-    
-    
+
+
     %This can be done in a variety of ways (the implementation details of which will vary from language to language), but the basic idea is to have one index $i$ at the first element and a second index $j$ at the second. Increment $j$ until the elements differ, then remove the elements.
 \end{solution}
 
@@ -257,9 +257,9 @@
 \end{exercise}
 
 \begin{solution}
-   (5 points each; just 1 point if only the final correct answer is given; 4 points for justification --- don't need
-   to show all steps).
-   
+    (5 points each; just 1 point if only the final correct answer is given; 4 points for justification --- don't need
+    to show all steps).
+
     \AlgName{SimpleSort}
     \begin{enumerate}[nosep]
         \item $[{\color{red}8},{\color{red}2},6,7,5,1,4,3]\rightarrow [{\color{red}2},{\color{red}8},6,7,5,1,4,3]$
@@ -337,7 +337,7 @@
 \end{solution}
 
 \begin{exercise}{5.9}
-(25 points)
+    (25 points)
     Given three SORTED (in ascending order) arrays $A[1..n], B[1..n]$,
     and $C[1..n]$, each containing $n$ numbers, give an $\bigO{\log n}$-time algorithm (again, counting the number of comparisons) to find the $\nth{n}$ smallest number of all $3n$
     elements in arrays $A, B$, and $C$.
@@ -363,12 +363,12 @@
         C' & = [c_0, c_1, \dots, c_{i'-1}]
     \end{align*}
     each of length $2\floor{\sfrac{n}{3}}$. This removal requires a constant number of comparisons, and we will perform this $\bigO{\log{n}}$ times (since we remove approximately a third of the elements at each step), for a total $\bigO{\log{n}}$ comparisons.
-    
+
     (10 points for the main ideas of the algorithm, in particular, showing how one can reduce the size
     of the arrays by a constant factor and reducing it to the subproblems of the same kind. 10 points
     for details; 5 points for analysis of $O(\log n)$ time.)
-    
-    
+
+
 \end{solution}
 
 \end{document}
