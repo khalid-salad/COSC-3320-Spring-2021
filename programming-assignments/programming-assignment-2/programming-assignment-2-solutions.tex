@@ -1,0 +1,79 @@
+\documentclass[draft]{article}
+\usepackage{programming}
+
+\begin{document}
+\begin{titlepage}\pagenumbering{gobble}
+    \begin{center}
+        {\scshape\LARGE University of Houston\par}
+        \vspace{1cm}
+        {\scshape\Large Programming Assignment 2 \par}
+        \vspace{1.5cm}
+        {\huge\bfseries COSC 3320 \par}
+        {\huge\bfseries Algorithms and Data Structures \par}
+        \vspace{0.5cm}
+        {\large\bfseries Gopal Pandurangan\par}
+        \vspace{2cm}
+        {\Large Solution\par}
+    \end{center}
+\end{titlepage}
+
+
+
+\section{Pseudocode and Explanation}
+Notice that this problem is effectively just the \AlgName{Select} algorithm on the \emph{distances from the origin}. Letting $\dist_0^2(x,y) = x^2+y^2$, our algorithm is simply
+
+\begin{algorithm}[H]
+    \caption{\AlgName{Select}}
+    \label{alg:selection}
+    \begin{algorithmic}[1]
+        \Function{\nameref*{alg:selection}}{$\texttt{points}$, $k$}
+        \AlgInput{An array $\texttt{points}$ of $n$ ordered pairs and the desired order statistic, $k$}
+        \AlgOutput{The value of the $\nth{k}$ order statistic}
+        \If {$\card{\texttt{points}} \leq 1$}
+        \State \Return $\texttt{points}[0]$
+        \Else
+        \State Partition $\texttt{points}$ into $\floor{\sfrac{n}{5}}$ groups of 5 elements each and a
+        leftover group of up to 4 elements.
+        \State Find the median of each group using MergeSort with comparison function $\dist_0^2$
+        \State $\texttt{medians} \gets$ the set of these $\floor{\sfrac{n}{5}}$ medians
+        \State $\texttt{pivot}\gets \Call{\nameref*{alg:selection}}{\texttt{medians},\floor{\sfrac{n}{10}}}$
+        \State $\texttt{left} \gets \set{p\in \texttt{points} \suchthat \dist_0^2(p) < \dist_0^2(\texttt{pivot})}$
+        \State $\texttt{right} \gets \set{p\in \texttt{points} \suchthat \dist_0^2(p) > \dist_0^2(\texttt{pivot})}$
+        \If {$\card{\texttt{left}} = k-1$}
+        \State \Return $p$
+        \ElsIf {$\card{\texttt{left}} > k - 1$}
+        \State \Return $\Call{\nameref*{alg:selection}}{\texttt{left} ,k}$
+        \Else
+        \State \Return $\Call{\nameref*{alg:selection}}{\texttt{right},k-\card{\texttt{left}}-1}$
+        \EndIf
+        \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+Then we can simply return the $k$ closest points to the origin by comparing with $\Call{\nameref*{alg:selection}}{\texttt{points},k}$. However, we must be careful about duplicates: say there are $\ell$ points less than the $\nth{k}$ closest point and $t$ points equidistant. Then, by definition, we must have $\ell + t \geq k$. If $t = 1$ then $\ell = k-1$ (of which all distances being distinct is a special case). Either way, we must choose all $\ell$ points and then any $k - \ell$ points equidistant to our $\nth{k}$ closest point.
+
+\[\underbrace{\underbrace{\set{p_1, p_2, \dots, p_{\ell}}}_{\ell\text{ points}}\underbrace{\{p_{\ell{+1}}, p_{\ell+2},\dots,p_k}_{k-\ell\text{ points}}}_{\ell+(k-\ell)=k\text{ points}},\dots, p_{\ell+t}\}\]
+\begin{algorithm}[H]
+    \caption{\AlgName{$k$-Closests}}
+    \label{alg:kclosest}
+    \begin{algorithmic}[1]
+        \Function{\nameref*{alg:kclosest}}{$\texttt{points}$, $k$}
+        \AlgInput{An array $\texttt{points}$ of $n$ ordered pairs and an integer $k$}
+        \AlgOutput{The $k$ closest points to the origin}
+        \If {$\card{\texttt{points}} \leq k$}
+        \State \Return $\texttt{points}$
+        \Else
+        \State $\texttt{cutoff}\gets\Call{\nameref*{alg:selection}}{\texttt{points}, k}$
+        \State $\texttt{left} \gets \set{p\in \texttt{points} \suchthat \dist_0^2(p) < \dist_0^2(\texttt{cutoff})}$
+        \State $\texttt{equal} \gets \set{p\in \texttt{points} \suchthat \dist_0^2(p) = \dist_0^2(\texttt{cutoff})}$
+        \State $\ell\gets\card{\texttt{left}}$
+        \State append $k - \ell$ points of \texttt{equal} to \texttt{left}
+        \State \Return \texttt{left}
+        \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\section{Analysis}
+Correctness follows from correctness of the \AlgName{Select} from the textbook. The runtime of \nameref{alg:selection} follows from the same analysis. Specifically, our runtime is $\bigTh{n}$.
+\end{document}
